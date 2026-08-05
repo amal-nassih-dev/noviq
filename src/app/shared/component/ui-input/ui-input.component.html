@@ -1,0 +1,25 @@
+<mat-form-field appearance="outline">
+  <mat-label>
+    {{label}}
+  </mat-label>
+
+  <input
+    matInput
+    [type]="type"
+    [placeholder]="placeholder"
+    [value]="value()"
+    (input)="handleInput($event)"
+    (blur)="handleBlur()"
+    [disabled]="disabled()" [autocomplete]="autocomplete"/>
+
+  @if(icon) {
+    <mat-icon matSuffix>
+      {{icon}}
+    </mat-icon>
+  }
+</mat-form-field>
+@if(showError){
+    <div class="ui-error">
+        {{ errorMessage }}
+    </div>
+}

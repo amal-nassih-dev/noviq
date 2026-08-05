@@ -1,0 +1,49 @@
+:host {
+  display: block;
+  height: 100vh;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.body {
+  flex: 1;                    /* takes all remaining space under the navbar */
+  display: flex;
+  overflow: hidden;           /* prevents double scrollbars */
+  min-height: 0;              /* important for flex children to shrink properly */
+}
+
+header {
+  height: 64px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-xl);
+  background: var(--color-surface);
+}
+
+main {
+  flex: 1;
+  overflow: auto;
+  background: var(--color-background);
+  padding: var(--spacing-xl);
+}
+
+
+.layout {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+.content {
+  flex: 1;
+  padding: var(--spacing-xl);
+  overflow: auto;
+  background: var(--color-background);
+}

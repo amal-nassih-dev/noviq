@@ -1,0 +1,46 @@
+<div class="login-page">
+
+    <form class="login-card" 
+          [formGroup]="loginForm" 
+           (ngSubmit)="onSubmit()">
+       <h1>Welcome Back</h1>
+       <p>
+         Sign In to continue to <strong>Noviq</strong>
+       </p>
+
+    <app-ui-input formControlName="email"
+    label="Email"
+    placeholder="you@example.com"
+    icon="email"
+    type="email" autocomplete="email">
+    </app-ui-input>
+
+    <app-ui-password-input formControlName="password"
+        label="Password"
+        placeholder="Enter your password">
+    </app-ui-password-input>
+
+   <div class="options">
+      <mat-checkbox>
+        Remember Me
+      </mat-checkbox>
+      <a href="#">Forgot Password?</a>
+   </div>
+    <app-ui-button
+    type="submit"
+    label="Sign In"
+    [disabled]="loginForm.invalid || isLoading()">
+    </app-ui-button>
+
+    @if(errorMessage()) {
+            <p class="error">
+                {{ errorMessage() }}
+            </p>
+    }
+
+    <p class="signup">
+        Don't have an account?
+        <a routerLink="/register">Sign Up</a>
+    </p>
+    </form>
+</div>

@@ -1,0 +1,24 @@
+<aside class="sidebar" [class.collapsed]="isCollapsed()">
+
+  
+
+  <nav class="sidebar__nav">
+    @for (item of items; track item.route) {
+      <a
+        [routerLink]="item.route"
+        routerLinkActive="active"
+        [matTooltip]="isCollapsed() ? item.label : ''"
+        matTooltipPosition="right">
+
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <span class="label">{{ item.label }}</span>
+      </a>
+    }
+  </nav>
+
+  <!-- Toggle button -->
+  <button class="sidebar__toggle" (click)="toggle()" type="button">
+    <mat-icon>{{ isCollapsed() ? 'keyboard_double_arrow_right' : 'keyboard_double_arrow_left' }}</mat-icon>
+  </button>
+
+</aside>

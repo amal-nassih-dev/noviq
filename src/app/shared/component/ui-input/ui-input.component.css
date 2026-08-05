@@ -1,0 +1,19 @@
+mat-form-field {
+    width: 100%;
+}
+
+
+input {
+    color: var(--color-text);
+}
+
+mat-icon {
+    color: var(--color-text-secondary);
+}
+
+.ui-error {
+    color: var(--color-error);
+    font-size: 12px;
+    margin-top: -12px;
+    margin-bottom: 16px;
+}

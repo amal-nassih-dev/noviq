@@ -1,0 +1,148 @@
+.sidebar {
+  width: 240px;
+  height: 100%;
+  background: var(--color-surface);
+  border-right: 1px solid color-mix(in srgb, var(--color-text-secondary) 14%, transparent);
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-md);
+  gap: 4px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  flex-shrink: 0;
+  transition: width 0.25s ease;
+}
+
+/* Collapsed state */
+.sidebar.collapsed {
+  width: 72px;
+  padding: var(--spacing-md) 0.6rem;
+}
+
+
+/* Navigation links */
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease;
+  overflow: hidden;
+}
+
+.sidebar.collapsed a {
+  justify-content: center;
+  padding: 0.7rem 0;
+  gap: 0;
+}
+
+/* Icon */
+.sidebar a mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+  transition: color 0.2s ease;
+}
+
+/* Label */
+.sidebar a .label {
+  opacity: 1;
+  transition: opacity 0.15s ease;
+}
+
+.sidebar.collapsed a .label {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+/* Hover */
+.sidebar a:hover {
+  background: var(--color-background-secondary);
+  color: var(--color-text);
+}
+
+.sidebar a:hover mat-icon {
+  color: var(--color-primary);
+}
+
+/* Active */
+.sidebar a.active {
+  background: var(--color-primary);
+  color: white;
+}
+
+.sidebar a.active mat-icon {
+  color: white;
+}
+
+/* Toggle sits at the bottom */
+.sidebar {
+  width: 240px;
+  height: 100%;
+  background: var(--color-surface);
+  border-right: 1px solid color-mix(in srgb, var(--color-text-secondary) 14%, transparent);
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-md);
+  overflow-x: hidden;
+  overflow-y: auto;
+  flex-shrink: 0;
+  transition: width 0.25s ease;
+}
+
+.sidebar.collapsed {
+  width: 72px;
+  padding: var(--spacing-md) 0.6rem;
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.sidebar__toggle:hover {
+  background: var(--color-background-secondary);
+  color: var(--color-primary);
+}
+
+/* When collapsed, keep the button centered */
+.sidebar.collapsed .sidebar__toggle {
+  width: 100%;
+}
+
+.sidebar__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;          /* ← right aligned */
+  width: 100%;
+  height: 40px;
+  padding-right: 0.5rem;
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sidebar.collapsed .sidebar__toggle {
+  justify-content: center;
+  padding-right: 0;
+}
+
+.sidebar__toggle mat-icon {
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}

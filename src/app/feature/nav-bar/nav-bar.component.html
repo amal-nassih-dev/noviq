@@ -1,0 +1,53 @@
+<nav class="navbar">
+  <div class="navbar__left">
+    <a routerLink="/dashboard" class="logo">Noviq</a>
+  </div>
+
+  <div class="navbar__right">
+    @if (authStateService.isLoggedIn()) {
+      <button
+        mat-button
+        [matMenuTriggerFor]="userMenu"
+        class="user-button">
+        <span class="user-button__name">
+          {{ authStateService.user()?.fullName }}
+        </span>
+        <mat-icon class="user-button__chevron">expand_more</mat-icon>
+      </button>
+
+      <mat-menu #userMenu="matMenu" class="user-menu">
+        <div class="menu-header">
+          <strong>{{ authStateService.user()?.fullName }}</strong>
+          <small>{{ authStateService.user()?.email }}</small>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <button mat-menu-item>
+          <mat-icon>person</mat-icon>
+          <span>My Profile</span>
+        </button>
+
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+
+        <button mat-menu-item>
+          <mat-icon>business</mat-icon>
+          <span>Organizations</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <button mat-menu-item (click)="logout()" class="menu-item--danger">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    } @else {
+      <a routerLink="/login">Sign In</a>
+      <a routerLink="/register" class="signup-link">Create Account</a>
+    }
+  </div>
+</nav>

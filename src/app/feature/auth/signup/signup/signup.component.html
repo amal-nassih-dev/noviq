@@ -1,0 +1,46 @@
+<div class="signup-page">
+
+    <form class="signup-card" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+        <h1>Create your account</h1>
+
+        <p class="subtitle">
+        Join <strong>Noviq</strong> and start organizing your projects today.
+        </p>
+
+        <app-ui-input formControlName="email" label="Email" 
+        placeholder="you@example.com"
+        icon="email"
+        type="email" autocomplete="email">
+        </app-ui-input>
+
+        <app-ui-input formControlName="fullName"
+        label="Full Name" 
+        placeholder="Enter your full name"
+        icon="person"
+        type="text" autocomplete="name" ></app-ui-input>
+
+        <app-ui-password-input formControlName="password" label="Password"  
+        placeholder="Enter your password">
+        </app-ui-password-input>
+        <p class="password-hint">
+           Password must contain at least 8 characters.
+        </p>
+
+         <app-ui-password-input formControlName="confirmPassword" label="Confirm Password"  
+        placeholder="Confirm your password">
+        </app-ui-password-input>
+
+        <app-ui-button type="submit" label="Create Account" [disabled]="signupForm.invalid || loading()"></app-ui-button>
+
+        @if(errorMessage()) {
+            <p class="error">
+                {{ errorMessage() }}
+            </p>
+        }
+        <p class="signin">
+            Already have an account?
+            <a routerLink="/login">Sign In</a>
+        </p>
+    </form>
+</div>

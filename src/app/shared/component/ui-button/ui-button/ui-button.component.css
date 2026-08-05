@@ -1,0 +1,7 @@
+button {
+  width:100%;
+  height:48px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-md);
+  font-weight: var(--weight-semibold);
+}
