@@ -23,6 +23,8 @@ button {
   font-weight: 600;
   letter-spacing: normal;
 
+  padding: 1.5rem;
+
   cursor: pointer;
   transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
 }
@@ -31,7 +33,6 @@ button {
   font-size: 18px;
   width: 18px;
   height: 18px;
-  font-family: 'Material Icons'; /* icons stay Material */
 }
 
 /* Primary */

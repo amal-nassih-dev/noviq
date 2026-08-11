@@ -39,19 +39,29 @@ export class ProjectComponent implements OnInit{
    protected readonly organization = signal<OrganizationResponse | null>(null);
 
    ngOnInit(): void {
-      const id = Number(this.activeRoute.snapshot.paramMap.get('orgId'));
-      this.orgId.set(id);
-      this.orgService.getById(id)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(org => this.organization.set(org));
 
-    this.projectService.findAll(id)
+    this.activeRoute.paramMap
       .pipe(
-        finalize(() => this.loading.set(false)),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe({
-        error: (err) => console.error(err)
+      .subscribe(params => {
+
+        const orgId =
+          Number(params.get('orgId'));
+
+        if (!orgId) {
+          return;
+        }
+
+        this.projectService
+          .findAll(orgId)
+          .pipe(
+          finalize(() => this.loading.set(false)),
+          takeUntilDestroyed(this.destroyRef)
+        )
+        .subscribe({
+          error: (err) => console.error(err)
+        });
       });
    }
 

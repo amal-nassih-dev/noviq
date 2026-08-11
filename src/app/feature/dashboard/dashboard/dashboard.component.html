@@ -1,3 +1,266 @@
-<h1>Dashboard</h1>
+<div class="dashboard">
 
-<p>Welcome to Noviq 🎉</p>
+  <!-- Header -->
+
+  <header class="dashboard__header">
+    <div>
+      <h1>
+        Dashboard
+      </h1>
+
+      @if (currentOrganization(); as organization) {
+        <p>
+          Welcome back 👋
+          Here's what's happening in
+          <strong>{{ organization.name }}</strong>.
+        </p>
+      } @else {
+        <p>
+          Welcome back 👋
+        </p>
+      }
+    </div>
+  </header>
+
+
+  <!-- Statistics -->
+
+  <section class="dashboard__stats">
+    <div class="stat-card">
+      <div class="stat-card__icon">
+        <span>📁</span>
+      </div>
+      <div>
+
+        <span class="stat-card__label">
+          Projects
+        </span>
+        <strong class="stat-card__value">
+          {{ projectCount() }}
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+      <div class="stat-card__icon">
+        <span>✓</span>
+      </div>
+
+      <div>
+
+        <span class="stat-card__label">
+          Tasks
+        </span>
+
+        <strong class="stat-card__value">
+          {{ taskCount() }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-card__icon">
+        <span>◐</span>
+      </div>
+
+      <div>
+
+        <span class="stat-card__label">
+          Active
+        </span>
+
+        <strong class="stat-card__value">
+          {{ activeTaskCount() }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-card__icon">
+        <span>✓</span>
+      </div>
+
+      <div>
+
+        <span class="stat-card__label">
+          Completed
+        </span>
+
+        <strong class="stat-card__value">
+          {{ doneTaskCount() }}
+        </strong>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Progress -->
+
+  <section class="dashboard__progress">
+
+    <div class="section-header">
+      <div>
+        <h2>
+          Overall progress
+        </h2>
+
+        <p>
+          {{ doneTaskCount() }} of
+          {{ taskCount() }} tasks completed
+        </p>
+
+      </div>
+
+      <strong>
+        {{ progress() }}%
+      </strong>
+
+    </div>
+
+
+    <div class="progress-bar">
+
+      <div
+        class="progress-bar__fill"
+        [style.width.%]="progress()">
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Projects -->
+
+  <section class="dashboard__projects">
+
+    <div class="section-header">
+      <div>
+
+        <h2>
+          Projects
+        </h2>
+
+        <p>
+          Your organization's projects
+        </p>
+
+      </div>
+
+
+      @if (currentOrganization(); as organization) {
+
+        <a
+          [routerLink]="[
+            '/organizations',
+            organization.id,
+            'projects'
+          ]"
+        >
+          See all
+        </a>
+
+      }
+
+    </div>
+
+
+    <div class="project-grid">
+
+      @for (
+        project of recentProjects();
+        track project.id
+      ) {
+
+        <a
+          class="project-card"
+          [routerLink]="[
+            '/organizations',
+            currentOrganization()?.id,
+            'projects',
+            project.id
+          ]"
+        >
+
+          <div class="project-card__header">
+
+            <span class="project-dot"></span>
+
+            <h3>
+              {{ project.name }}
+            </h3>
+
+          </div>
+
+
+          <p class="project-card__description">
+
+            {{ project.description || 'No description' }}
+
+          </p>
+
+
+          <div class="project-card__stats">
+
+            <span>
+              {{ project.taskCount ?? 0 }}
+              tasks
+            </span>
+
+            <span>
+              {{ project.doneTaskCount ?? 0 }}
+              done
+            </span>
+
+          </div>
+
+
+          <div class="project-progress">
+
+            <div
+              class="project-progress__fill"
+              [style.width.%]="
+                project.taskCount
+                  ? ((project.doneTaskCount ?? 0) / project.taskCount) * 100
+                  : 0
+              ">
+            </div>
+
+          </div>
+
+        </a>
+
+      }
+
+      @empty {
+
+        <div class="empty-state">
+
+          <h3>
+            No projects yet
+          </h3>
+
+          <p>
+            Create your first project to get started.
+          </p>
+
+        </div>
+
+      }
+
+    </div>
+
+  </section>
+
+</div>
