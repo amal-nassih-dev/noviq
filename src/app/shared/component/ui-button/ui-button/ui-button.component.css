@@ -5,3 +5,72 @@ button {
   font-size: var(--font-md);
   font-weight: var(--weight-semibold);
 }
+
+/* In ui-button.component.css */
+.ui-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  height: 40px;
+  padding: 0 1.2rem;
+  border: none;
+  border-radius: 999px;
+
+  /* 🔑 same font as the rest of the app */
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: normal;
+
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.ui-btn mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  font-family: 'Material Icons'; /* icons stay Material */
+}
+
+/* Primary */
+.ui-btn--primary {
+  background: var(--color-primary);
+  color: white;
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--color-primary) 30%, transparent);
+}
+
+.ui-btn--primary:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-primary) 35%, transparent);
+}
+
+/* Secondary */
+.ui-btn--secondary {
+  background: var(--color-background-secondary);
+  color: var(--color-primary);
+}
+
+.ui-btn--secondary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-primary) 15%, transparent);
+}
+
+/* Ghost */
+.ui-btn--ghost {
+  background: transparent;
+  color: var(--color-text-secondary);
+}
+
+.ui-btn--ghost:hover:not(:disabled) {
+  background: var(--color-background-secondary);
+  color: var(--color-text);
+}
+
+.ui-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}

@@ -1,0 +1,150 @@
+<h2 mat-dialog-title>
+  {{ isEditMode() ? 'Edit Task' : 'Create Task' }}
+</h2>
+
+<mat-dialog-content>
+
+  <form [formGroup]="form">
+
+    <!-- Title -->
+    <app-ui-input
+      formControlName="title"
+      label="Title"
+      placeholder="Task title">
+    </app-ui-input>
+
+
+    <!-- Description -->
+    <app-ui-input
+      formControlName="description"
+      label="Description"
+      placeholder="Optional description">
+    </app-ui-input>
+
+
+    <!-- Status + Priority -->
+    <div class="form-row">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+
+        <mat-select formControlName="status">
+
+          @for (status of statuses; track status) {
+            <mat-option [value]="status">
+              {{ status.replace('_', ' ') }}
+            </mat-option>
+          }
+
+        </mat-select>
+
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline">
+        <mat-label>Priority</mat-label>
+
+        <mat-select formControlName="priority">
+
+          @for (priority of priorities; track priority) {
+            <mat-option [value]="priority">
+              {{ priority }}
+            </mat-option>
+          }
+
+        </mat-select>
+
+      </mat-form-field>
+
+    </div>
+
+
+    <!-- Due date -->
+    <mat-form-field
+      appearance="outline"
+      class="full-width">
+
+      <mat-label>Due date</mat-label>
+
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="dueDate">
+
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker">
+      </mat-datepicker-toggle>
+
+      <mat-datepicker #picker></mat-datepicker>
+
+    </mat-form-field>
+
+
+    <!-- Assignee -->
+    <mat-form-field
+      appearance="outline"
+      class="full-width">
+
+      <mat-label>Assignee</mat-label>
+
+      <input
+        matInput
+        [formControl]="assigneeSearch"
+        placeholder="Search by name or email"
+        [matAutocomplete]="assigneeAuto">
+
+      <mat-autocomplete
+        #assigneeAuto="matAutocomplete"
+        (optionSelected)="selectAssignee($event.option.value)">
+
+        @for (
+          member of filteredMembers();
+          track member.userId
+        ) {
+
+          <mat-option [value]="member">
+
+            <div class="member-option">
+
+              <span class="member-name">
+                {{ member.fullName }}
+              </span>
+
+              <span class="member-email">
+                {{ member.email }}
+              </span>
+
+            </div>
+
+          </mat-option>
+
+        }
+
+      </mat-autocomplete>
+
+    </mat-form-field>
+
+  </form>
+
+</mat-dialog-content>
+
+
+<mat-dialog-actions align="end">
+
+  <button
+    mat-button
+    type="button"
+    (click)="close()">
+
+    Cancel
+
+  </button>
+
+  <app-ui-button
+    [label]="isEditMode() ? 'Save' : 'Create'"
+    [disabled]="form.invalid"
+    (click)="save()">
+  </app-ui-button>
+
+</mat-dialog-actions>

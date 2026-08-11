@@ -1,10 +1,6 @@
 <nav class="navbar">
-  <div class="navbar__left">
-    <a routerLink="/dashboard" class="logo">Noviq</a>
-  </div>
 
   <div class="navbar__right">
-    @if (authStateService.isLoggedIn()) {
       <button
         mat-button
         [matMenuTriggerFor]="userMenu"
@@ -44,10 +40,6 @@
           <mat-icon>logout</mat-icon>
           <span>Logout</span>
         </button>
-      </mat-menu>
-    } @else {
-      <a routerLink="/login">Sign In</a>
-      <a routerLink="/register" class="signup-link">Create Account</a>
-    }
+      </mat-menu>x
   </div>
 </nav>

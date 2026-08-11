@@ -2,7 +2,6 @@
   display: block;
 }
 
-/* ========== Navbar ========== */
 .navbar {
   height: 64px;
   display: flex;
@@ -10,38 +9,23 @@
   align-items: center;
   padding: 0 var(--spacing-xl);
   background: var(--color-surface);
-  border-bottom: 1px solid color-mix(in srgb, var(--color-text-secondary) 18%, transparent);
-  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text-secondary) 14%, transparent);
+  flex-shrink: 0;
 }
 
-/* Logo */
-.logo {
-  text-decoration: none;
-  font-size: 1.4rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--color-primary);
-  transition: color var(--transition-fast), opacity var(--transition-fast);
+.navbar__left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-.logo:hover {
-  color: var(--color-primary-dark);
-}
-
-.logo:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 4px;
-  border-radius: var(--radius-sm);
-}
-
-/* Right side */
 .navbar__right {
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
+  margin-left: auto;   /* keeps user always on the right */
 }
 
-/* ========== User button (trigger) ========== */
+/* ===== User button ===== */
 .user-button {
   display: inline-flex !important;
   align-items: center;
@@ -54,20 +38,12 @@
   color: var(--color-text) !important;
   background: transparent !important;
   border: 1px solid transparent;
-  transition: 
-    background var(--transition-fast),
-    border-color var(--transition-fast),
-    box-shadow var(--transition-fast);
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .user-button:hover {
   background: var(--color-background-secondary) !important;
   border-color: color-mix(in srgb, var(--color-primary) 25%, transparent);
-}
-
-.user-button:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
 }
 
 .user-button__name {
@@ -82,10 +58,9 @@
   width: 20px !important;
   height: 20px !important;
   color: var(--color-text-secondary);
-  transition: transform var(--transition-fast);
+  transition: transform 0.2s ease;
 }
 
-/* Rotate when open */
 .user-button[aria-expanded="true"] .user-button__chevron {
   transform: rotate(180deg);
 }

@@ -1,0 +1,111 @@
+:host {
+  display: block;
+}
+
+.confirm-dialog {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  min-width: 360px;
+}
+
+/* Header */
+.confirm-dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text-secondary) 14%, transparent);
+}
+
+.confirm-dialog__header h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.confirm-dialog__close {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.confirm-dialog__close:hover {
+  background: var(--color-background-secondary);
+  color: var(--color-text);
+}
+
+.confirm-dialog__close mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* Body */
+.confirm-dialog__body {
+  padding: 1.25rem 1.25rem 0.5rem;
+}
+
+.confirm-dialog__body p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+}
+
+/* Footer */
+.confirm-dialog__footer {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1.25rem;
+}
+
+/* Buttons */
+.btn {
+  flex: 1;
+  height: 42px;
+  border: none;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn--danger {
+  background: var(--color-error);
+  color: white;
+}
+
+.btn--danger:hover {
+  background: color-mix(in srgb, var(--color-error) 85%, black);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid color-mix(in srgb, var(--color-text-secondary) 25%, transparent);
+}
+
+.btn--ghost:hover {
+  background: var(--color-background-secondary);
+  color: var(--color-text);
+}

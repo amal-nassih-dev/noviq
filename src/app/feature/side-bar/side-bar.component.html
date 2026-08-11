@@ -1,24 +1,405 @@
-<aside class="sidebar" [class.collapsed]="isCollapsed()">
+<aside
+  class="sidebar"
+  [class.collapsed]="isCollapsed()"
+>
 
-  
+  <!-- ========================================= -->
+  <!-- BRAND -->
+  <!-- ========================================= -->
+
+  <div class="sidebar__brand">
+    <svg
+      class="sidebar__logo"
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect
+        width="32"
+        height="32"
+        rx="8"
+        fill="var(--color-primary)"
+      />
+
+      <path
+        d="M10 22V10h2.8l5.4 8.2V10H21v12h-2.8l-5.4-8.2V22H10z"
+        fill="white"
+      />
+
+    </svg>
+
+    <span class="sidebar__title">
+      Noviq
+    </span>
+
+    <span class="sidebar__beta">
+      beta
+    </span>
+
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- ORGANIZATION -->
+  <!-- ========================================= -->
+
+  @if (currentOrganization(); as organization) {
+
+    <div class="organization-switcher">
+
+      <!-- Organization button -->
+
+      <button
+        class="organization-switcher__button"
+        type="button"
+        (click)="toggleOrganizationMenu()"
+      >
+
+        <span class="organization-avatar">
+          {{ organization.name.substring(0, 2).toUpperCase() }}
+        </span>
+
+        <span class="organization-name">
+          {{ organization.name }}
+        </span>
+
+        <mat-icon>
+          {{
+            isOrganizationMenuOpen()
+              ? 'expand_less'
+              : 'expand_more'
+          }}
+        </mat-icon>
+
+      </button>
+
+
+      <!-- ===================================== -->
+      <!-- ORGANIZATION DROPDOWN -->
+      <!-- ===================================== -->
+
+      @if (isOrganizationMenuOpen()) {
+
+        <div class="organization-menu">
+
+          @for (
+            org of organizations();
+            track org.id
+          ) {
+
+            <button
+              class="organization-option"
+              type="button"
+              (click)="selectOrganization(org)"
+            >
+
+              <span class="organization-avatar">
+                {{ org.name.substring(0, 2).toUpperCase() }}
+              </span>
+
+              <span class="organization-option__content">
+
+                <span class="organization-option__name">
+                  {{ org.name }}
+                </span>
+
+              </span>
+
+              @if (org.id === organization.id) {
+
+                <mat-icon class="organization-check">
+                  check
+                </mat-icon>
+
+              }
+
+            </button>
+
+          }
+
+
+          <div class="organization-divider"></div>
+
+
+          <button
+            class="manage-organizations"
+            type="button"
+            (click)="manageOrganizations()"
+          >
+
+            <mat-icon>
+              add
+            </mat-icon>
+
+            <span>
+              Manage organizations
+            </span>
+
+          </button>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+
+  <!-- ========================================= -->
+  <!-- NAVIGATION -->
+  <!-- ========================================= -->
 
   <nav class="sidebar__nav">
-    @for (item of items; track item.route) {
-      <a
-        [routerLink]="item.route"
-        routerLinkActive="active"
-        [matTooltip]="isCollapsed() ? item.label : ''"
-        matTooltipPosition="right">
 
-        <mat-icon>{{ item.icon }}</mat-icon>
-        <span class="label">{{ item.label }}</span>
-      </a>
+    <!-- Dashboard -->
+
+    <a
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="nav-item"
+      matTooltip="Dashboard"
+      [matTooltipDisabled]="!isCollapsed()"
+    >
+
+      <mat-icon>
+        dashboard
+      </mat-icon>
+
+      <span class="label">
+        Dashboard
+      </span>
+
+    </a>
+
+
+
+    <!-- ======================================= -->
+    <!-- ORGANIZATION NAVIGATION -->
+    <!-- ======================================= -->
+
+    @if (currentOrganization(); as organization) {
+
+       <a
+    class="nav-item"
+    [routerLink]="[
+        '/organizations',
+        organization.id,
+        'members'
+    ]"
+    routerLinkActive="active"
+    matTooltip="Members"
+    [matTooltipDisabled]="!isCollapsed()"
+    >
+
+    <mat-icon>
+        group
+    </mat-icon>
+
+    <span class="label">
+        Members
+    </span>
+
+    @if (!isCollapsed()) {
+        <span class="project-count">
+        {{ members().length }}
+        </span>
     }
+
+    </a>
+
+      <!-- Section title -->
+
+      <div class="nav-section-title">
+        Projects
+      </div>
+
+
+      <!-- ===================================== -->
+      <!-- ALL PROJECTS -->
+      <!-- ===================================== -->
+
+      <a
+        class="nav-item"
+        [routerLink]="[
+          '/organizations',
+          organization.id,
+          'projects'
+        ]"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        matTooltip="All Projects"
+        [matTooltipDisabled]="!isCollapsed()"
+      >
+
+        <mat-icon>
+          folder
+        </mat-icon>
+
+        <span class="label">
+          All Projects
+        </span>
+
+      </a>
+
+
+      <!-- ===================================== -->
+      <!-- PROJECT LIST -->
+      <!-- ===================================== -->
+
+      <div class="project-list">
+
+        @for (
+          project of sidebarProjects();
+          track project.id
+        ) {
+
+          <a
+            class="project-item"
+            [routerLink]="[
+              '/organizations',
+              organization.id,
+              'projects',
+              project.id
+            ]"
+            routerLinkActive="active"
+            [matTooltip]="project.name"
+            [matTooltipDisabled]="!isCollapsed()"
+          >
+
+            <span class="project-dot"></span>
+
+            <span class="project-name">
+              {{ project.name }}
+            </span>
+
+            @if (project.taskCount !== undefined) {
+
+              <span class="project-count">
+                {{ project.taskCount }}
+              </span>
+
+            }
+
+          </a>
+
+        }
+
+      </div>
+
+      @if (hasMoreProjects()) {
+
+        <a
+            class="see-all-projects"
+            [routerLink]="[
+            '/organizations',
+            organization.id,
+            'projects'
+            ]"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+        >
+
+            <span class="label">
+            See all projects
+            </span>
+
+            <mat-icon>
+            arrow_forward
+            </mat-icon>
+
+        </a>
+
+        }
+
+
+      <!-- ===================================== -->
+      <!-- NEW PROJECT -->
+      <!-- ===================================== -->
+
+      <button
+        class="add-project"
+        type="button"
+        (click)="createProject()"
+        matTooltip="Create project"
+        [matTooltipDisabled]="!isCollapsed()"
+      >
+
+        <mat-icon>
+          add
+        </mat-icon>
+
+        <span class="label">
+          New project
+        </span>
+
+      </button>
+
+    }
+
   </nav>
 
-  <!-- Toggle button -->
-  <button class="sidebar__toggle" (click)="toggle()" type="button">
-    <mat-icon>{{ isCollapsed() ? 'keyboard_double_arrow_right' : 'keyboard_double_arrow_left' }}</mat-icon>
-  </button>
+
+  <!-- ========================================= -->
+  <!-- BOTTOM -->
+  <!-- ========================================= -->
+
+  <div class="sidebar__bottom">
+
+    @if (currentOrganization(); as organization) {
+
+      <!-- Organization settings -->
+
+      <a
+        class="nav-item"
+        [routerLink]="[
+          '/organizations',
+          organization.id,
+          'settings'
+        ]"
+        routerLinkActive="active"
+        matTooltip="Settings"
+        [matTooltipDisabled]="!isCollapsed()"
+      >
+
+        <mat-icon>
+          settings
+        </mat-icon>
+
+        <span class="label">
+           Settings
+        </span>
+
+      </a>
+
+    }
+
+
+    <!-- Collapse -->
+
+    <button
+      class="sidebar__toggle"
+      type="button"
+      (click)="toggle()"
+      [matTooltip]="
+        isCollapsed()
+          ? 'Expand sidebar'
+          : 'Collapse sidebar'
+      "
+      [matTooltipPosition]="'right'"
+    >
+
+      <mat-icon>
+        {{
+          isCollapsed()
+            ? 'keyboard_double_arrow_right'
+            : 'keyboard_double_arrow_left'
+        }}
+      </mat-icon>
+
+    </button>
+
+  </div>
 
 </aside>

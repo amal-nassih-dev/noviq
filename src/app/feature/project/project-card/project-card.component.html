@@ -1,0 +1,65 @@
+<app-ui-card class="project-card" (click)="openBoard()">
+
+  <!-- Header (only status + title + actions) -->
+  <div class="project-card__header">
+    <div class="project-card__status"></div>
+
+    <h3 class="project-card__name">{{ project.name }}</h3>
+
+    <div class="project-card__actions" (click)="$event.stopPropagation()">
+      <button
+        type="button"
+        class="icon-btn"
+        (click)="edit.emit(project)"
+        matTooltip="Edit"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button
+        type="button"
+        class="icon-btn icon-btn--danger"
+        (click)="delete.emit(project)"
+        matTooltip="Delete"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Description -->
+  <p class="project-card__description">
+    {{ project.description || 'No description' }}
+  </p>
+
+  <!-- Separator -->
+  <div class="project-card__divider"></div>
+
+  <!-- Stats -->
+  <div class="project-card__stats">
+    <div class="stat">
+      <strong>{{ project.taskCount ?? 0 }}</strong>
+      <span>Tasks</span>
+    </div>
+    <div class="stat">
+      <strong>{{ project.activeTaskCount ?? 0 }}</strong>
+      <span>Active</span>
+    </div>
+    <div class="stat">
+      <strong>{{ project.doneTaskCount ?? 0 }}</strong>
+      <span>Done</span>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="project-card__progress">
+    <div class="progress-label">
+      <span>Progress</span>
+      <span class="progress-value">{{ progress }}%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-bar__fill" [style.width.%]="progress"></div>
+    </div>
+  </div>
+
+</app-ui-card>

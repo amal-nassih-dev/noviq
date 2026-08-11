@@ -1,0 +1,131 @@
+<h2 mat-dialog-title>
+  Add Member
+</h2>
+
+<mat-dialog-content>
+
+  <!-- Search user -->
+
+  <mat-form-field
+    appearance="outline"
+    class="full-width"
+  >
+
+    <mat-label>
+      Search user
+    </mat-label>
+
+    <input
+      matInput
+      [formControl]="searchControl"
+      placeholder="Search by name or email"
+      [matAutocomplete]="userAuto"
+    />
+
+    <mat-autocomplete
+      #userAuto="matAutocomplete"
+      [displayWith]="displayUser"
+      (optionSelected)="selectUser($event.option.value)"
+    >
+
+      @for (user of users(); track user.id) {
+
+        <mat-option [value]="user">
+
+          <div class="user-option">
+
+            <span class="user-option__name">
+              {{ user.fullName }}
+            </span>
+
+            <span class="user-option__email">
+              {{ user.email }}
+            </span>
+
+          </div>
+
+        </mat-option>
+
+      }
+
+    </mat-autocomplete>
+
+  </mat-form-field>
+
+
+  <!-- Selected user -->
+
+  @if (selectedUser(); as user) {
+
+    <div class="selected-user">
+
+      <div class="selected-user__avatar">
+        {{ user.fullName.charAt(0).toUpperCase() }}
+      </div>
+
+      <div class="selected-user__info">
+
+        <strong>
+          {{ user.fullName }}
+        </strong>
+
+        <span>
+          {{ user.email }}
+        </span>
+
+      </div>
+
+      <button
+        type="button"
+        class="clear-user"
+        (click)="clearUser()"
+      >
+        ×
+      </button>
+
+    </div>
+
+  }
+
+
+  <!-- Role -->
+<form [formGroup]="form">
+  <mat-form-field
+    appearance="outline"
+    class="full-width"
+  >
+
+    <mat-label>
+      Role
+    </mat-label>
+
+    <mat-select formControlName="role">
+
+      @for (role of roles; track role) {
+
+        <mat-option [value]="role">
+
+          {{ role }}
+
+        </mat-option>
+
+      }
+
+    </mat-select>
+
+  </mat-form-field></form>
+
+</mat-dialog-content>
+
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-button (click)="close()">
+    Cancel
+  </button>
+
+  <app-ui-button
+    label="Add Member"
+    [disabled]="!selectedUser() || form.invalid"
+    (click)="addMember()"
+  />
+</mat-dialog-actions>

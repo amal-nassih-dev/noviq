@@ -1,0 +1,68 @@
+<app-ui-card class="org-card" (click)="openDetails()">
+
+  <!-- Header -->
+  <div class="org-card__header">
+    <div class="org-card__avatar">
+      {{ getInitials(organization.name) }}
+    </div>
+
+    <div class="org-card__info">
+      <h3 class="org-card__name">{{ organization.name }}</h3>
+      <p class="org-card__meta">
+        {{ organization.memberCount ?? 1 }} members
+        · since {{ organization.createdAt | date:'MMM d' }}
+      </p>
+    </div>
+    <div class="org-card__actions" (click)="$event.stopPropagation()">
+  <button
+    type="button"
+    class="icon-btn"
+    [matMenuTriggerFor]="cardMenu"
+    matTooltip="More actions"
+  >
+    <mat-icon>more_vert</mat-icon>
+  </button>
+
+  <mat-menu #cardMenu="matMenu" xPosition="before" class="org-card-menu">
+    <button mat-menu-item (click)="addMember.emit(organization)">
+      <mat-icon>person_add</mat-icon>
+      <span>Add member</span>
+    </button>
+
+    <button mat-menu-item (click)="edit.emit(organization)">
+      <mat-icon>edit</mat-icon>
+      <span>Edit</span>
+    </button>
+
+    <mat-divider></mat-divider>
+
+    <button mat-menu-item class="danger" (click)="delete.emit(organization)">
+      <mat-icon>delete</mat-icon>
+      <span>Delete</span>
+    </button>
+  </mat-menu>
+</div>
+  </div>
+
+  <!-- Description -->
+  <p class="org-card__description">
+    {{ organization.description || 'No description' }}
+  </p>
+
+  <!-- Stats -->
+  <div class="org-card__stats">
+    <div class="stat">
+      <strong>{{ organization.projectCount ?? 0 }}</strong>
+      <span>Projects</span>
+    </div>
+    <div class="stat">
+      <strong>{{ organization.taskCount ?? 0 }}</strong>
+      <span>Tasks</span>
+    </div>
+    <div class="stat">
+      <strong>{{ organization.doneTaskCount ?? 0 }}</strong>
+      <span>Done</span>
+    </div>
+  </div>
+
+</app-ui-card>

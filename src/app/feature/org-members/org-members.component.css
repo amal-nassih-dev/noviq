@@ -1,0 +1,599 @@
+:host {
+  display: block;
+}
+
+
+/* =========================================
+   PAGE
+   ========================================= */
+
+.members-page {
+  padding: 2rem 2.5rem;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  padding-bottom: 2rem;
+
+  border-bottom: 1px solid
+    color-mix(
+      in srgb,
+      var(--color-text-secondary) 12%,
+      transparent
+    );
+}
+
+
+.page-header__content {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.page-header h1 {
+  margin: 0.7rem 0 0.3rem;
+
+  color: var(--color-text);
+
+  font-size: 2rem;
+  font-weight: 700;
+
+  letter-spacing: -0.03em;
+}
+
+
+.page-header p {
+  margin: 0;
+
+  color: var(--color-text-secondary);
+
+  font-size: 1rem;
+}
+
+
+/* =========================================
+   BREADCRUMBS
+   ========================================= */
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  color: var(--color-text-secondary);
+
+  font-size: 0.9rem;
+}
+
+
+.breadcrumbs span:last-child {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+
+.breadcrumbs mat-icon {
+  width: 18px;
+  height: 18px;
+
+  font-size: 18px;
+}
+
+
+/* =========================================
+   ROLE SUMMARY
+   ========================================= */
+
+.role-summary {
+  display: flex;
+  align-items: center;
+
+  gap: 0.75rem;
+
+  padding: 1.5rem 0;
+}
+
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 0.5rem;
+
+  padding: 0.55rem 0.8rem;
+
+  border-radius: 10px;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+
+.role-badge mat-icon {
+  width: 17px;
+  height: 17px;
+
+  font-size: 17px;
+}
+
+
+.role-badge strong {
+  margin-left: 0.2rem;
+}
+
+
+.role-badge--owner {
+  background: color-mix(
+    in srgb,
+    #f59e0b 14%,
+    transparent
+  );
+
+  color: #f59e0b;
+}
+
+
+.role-badge--admin {
+  background: color-mix(
+    in srgb,
+    var(--color-primary) 14%,
+    transparent
+  );
+
+  color: var(--color-primary);
+}
+
+
+.role-badge--member {
+  background: color-mix(
+    in srgb,
+    #3b82f6 14%,
+    transparent
+  );
+
+  color: #3b82f6;
+}
+
+
+/* =========================================
+   TABLE
+   ========================================= */
+
+.members-card {
+  overflow: hidden;
+
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--color-text-secondary) 14%,
+      transparent
+    );
+
+  border-radius: var(--radius-xl);
+
+  background: var(--color-surface);
+
+  box-shadow: var(--shadow-sm);
+}
+
+
+.members-table {
+  width: 100%;
+}
+
+
+.members-table__header,
+.member-row {
+  display: grid;
+
+  grid-template-columns:
+    minmax(220px, 1.4fr)
+    minmax(220px, 1.5fr)
+    minmax(150px, 0.8fr)
+    minmax(120px, 0.6fr)
+    60px;
+
+  align-items: center;
+}
+
+
+.members-table__header {
+  padding: 1rem 1.25rem;
+
+  border-bottom: 1px solid
+    color-mix(
+      in srgb,
+      var(--color-text-secondary) 12%,
+      transparent
+    );
+
+  color: var(--color-text-secondary);
+
+  font-size: 0.72rem;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+
+.member-row {
+  min-height: 76px;
+
+  padding: 0 1.25rem;
+
+  border-bottom: 1px solid
+    color-mix(
+      in srgb,
+      var(--color-text-secondary) 9%,
+      transparent
+    );
+
+  transition: background 0.15s ease;
+}
+
+
+.member-row:last-child {
+  border-bottom: none;
+}
+
+
+.member-row:hover {
+  background: color-mix(
+    in srgb,
+    var(--color-background-secondary) 55%,
+    transparent
+  );
+}
+
+
+/* =========================================
+   MEMBER NAME
+   ========================================= */
+
+.member-name {
+  display: flex;
+  align-items: center;
+
+  gap: 0.75rem;
+
+  min-width: 0;
+}
+
+
+.member-avatar {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: var(--color-primary);
+
+  color: white;
+
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+
+.member-name__info {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+}
+
+
+.member-name__full {
+  overflow: hidden;
+
+  color: var(--color-text);
+
+  font-size: 0.95rem;
+  font-weight: 600;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+.mobile-only {
+  display: none;
+}
+
+
+/* =========================================
+   EMAIL
+   ========================================= */
+
+.member-email {
+  overflow: hidden;
+
+  color: var(--color-text-secondary);
+
+  font-size: 0.9rem;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   ROLE
+   ========================================= */
+
+.member-role {
+  display: flex;
+  align-items: center;
+}
+
+
+.role-pill {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 0.4rem;
+
+  min-height: 36px;
+
+  padding: 0.4rem 0.7rem;
+
+  border: none;
+
+  border-radius: 9px;
+
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+
+.role-pill mat-icon {
+  width: 16px;
+  height: 16px;
+
+  font-size: 16px;
+}
+
+
+.role-pill--owner {
+  background: color-mix(
+    in srgb,
+    #f59e0b 14%,
+    transparent
+  );
+
+  color: #f59e0b;
+}
+
+
+.role-pill--clickable {
+  background: color-mix(
+    in srgb,
+    var(--color-primary) 10%,
+    transparent
+  );
+
+  color: var(--color-primary);
+
+  cursor: pointer;
+
+  transition: background 0.15s ease;
+}
+
+
+.role-pill--clickable:hover {
+  background: color-mix(
+    in srgb,
+    var(--color-primary) 18%,
+    transparent
+  );
+}
+
+
+.role-arrow {
+  margin-left: 0.1rem;
+}
+
+
+/* =========================================
+   JOINED
+   ========================================= */
+
+.member-joined {
+  color: var(--color-text-secondary);
+
+  font-size: 0.85rem;
+}
+
+
+/* =========================================
+   ACTIONS
+   ========================================= */
+
+.member-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+
+.member-action {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: var(--radius-md);
+
+  background: transparent;
+
+  color: var(--color-text-secondary);
+
+  cursor: pointer;
+}
+
+
+.member-action mat-icon {
+  width: 19px;
+  height: 19px;
+
+  font-size: 19px;
+}
+
+
+.member-action--delete:hover {
+  background: color-mix(
+    in srgb,
+    var(--color-error) 12%,
+    transparent
+  );
+
+  color: var(--color-error);
+}
+
+
+/* =========================================
+   EMPTY STATE
+   ========================================= */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 5rem 2rem;
+
+  text-align: center;
+}
+
+
+.empty-state > mat-icon {
+  width: 48px;
+  height: 48px;
+
+  margin-bottom: 1rem;
+
+  font-size: 48px;
+
+  color: var(--color-text-secondary);
+}
+
+
+.empty-state h2 {
+  margin: 0 0 0.5rem;
+
+  color: var(--color-text);
+
+  font-size: 1.2rem;
+}
+
+
+.empty-state p {
+  margin: 0 0 1.5rem;
+
+  color: var(--color-text-secondary);
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 900px) {
+
+  .members-page {
+    padding: 1.5rem;
+  }
+
+
+  .members-table__header,
+  .member-row {
+    grid-template-columns:
+      minmax(180px, 1.5fr)
+      minmax(180px, 1fr)
+      minmax(130px, 0.8fr)
+      50px;
+  }
+
+
+  .members-table__header > div:nth-child(4),
+  .member-joined {
+    display: none;
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .page-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 1.25rem;
+  }
+
+
+  .role-summary {
+    flex-wrap: wrap;
+  }
+
+
+  .members-table__header {
+    display: none;
+  }
+
+
+  .member-row {
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+
+    gap: 0.75rem;
+
+    padding: 1rem;
+  }
+
+
+  .member-email {
+    display: none;
+  }
+
+
+  .mobile-only {
+    display: block;
+  }
+
+
+  .member-role {
+    grid-column: 1;
+  }
+
+
+  .member-actions {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+}

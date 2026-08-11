@@ -1,8 +1,12 @@
 <button
   mat-raised-button
+  class="ui-btn"
   [color]="color"
   [type]="type"
-  [disabled]="disabled">
+  [disabled]="disabled"
+  [class.ui-btn--primary]="variant === 'primary'"
+  [class.ui-btn--secondary]="variant === 'secondary'"
+  [class.ui-btn--ghost]="variant === 'ghost'">
 
   {{label}}
 

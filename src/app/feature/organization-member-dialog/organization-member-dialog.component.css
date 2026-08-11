@@ -1,0 +1,142 @@
+/* organization-member-dialog.component.css */
+
+:host {
+  display: block;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Better spacing inside the dialog content */
+mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-top: 0.5rem !important;
+}
+
+/* Search field */
+mat-form-field.full-width {
+  margin-bottom: 0;
+}
+
+/* Autocomplete option */
+.user-option {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.15rem 0;
+}
+
+.user-option__name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+.user-option__email {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+/* Selected user chip */
+.selected-user {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 12px;
+  background: var(--color-background-secondary);
+  border: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
+  transition: background 0.15s ease;
+}
+
+.selected-user:hover {
+  background: color-mix(in srgb, var(--color-background-secondary) 85%, var(--color-primary) 8%);
+}
+
+.selected-user__avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.selected-user__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.selected-user__info strong {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.selected-user__info span {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.clear-user {
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 1.35rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.clear-user:hover {
+  background: color-mix(in srgb, var(--color-error) 12%, transparent);
+  color: var(--color-error);
+}
+
+/* Role select */
+mat-form-field {
+  width: 100%;
+}
+
+/* Dialog actions */
+
+.dialog-actions {
+  padding: 0.75rem 1.5rem 1.25rem !important;
+  gap: 0.75rem;
+}
+
+mat-dialog-actions button[mat-button] {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  padding: 0.5rem 1rem;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+mat-dialog-actions button[mat-button]:hover {
+  background: var(--color-background-secondary);
+  color: var(--color-text);
+}

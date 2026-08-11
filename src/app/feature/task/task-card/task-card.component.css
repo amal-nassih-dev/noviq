@@ -1,0 +1,203 @@
+.task-card {
+  width: 100%;
+  min-width: 0;
+
+  background: var(--color-surface);
+
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--color-text-secondary) 12%,
+      transparent
+    );
+
+  border-radius: var(--radius-md);
+
+  padding: 0.85rem;
+
+  cursor: grab;
+
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.task-card:hover {
+  box-shadow: var(--shadow-sm);
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--color-primary) 25%,
+      transparent
+    );
+}
+
+.task-card__title {
+  margin: 0.4rem 0 0;
+
+  font-size: 0.925rem;
+  font-weight: 600;
+
+  color: var(--color-text);
+
+  line-height: 1.35;
+
+  /* Prevent very long titles from breaking cards */
+  overflow-wrap: anywhere;
+}
+
+.priority {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+  text-transform: capitalize;
+}
+
+.priority--low {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.priority--medium {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.priority--high {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.task-card__footer {
+  margin-top: 0.65rem;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.task-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 0.5rem;
+
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+
+  border-top: 1px solid var(--color-border);
+
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+
+  min-width: 0;
+}
+
+.task-card__due-date {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  min-width: 0;
+}
+
+.task-card__assignee {
+  display: flex;
+  align-items: center;
+
+  gap: 0.45rem;
+
+  min-width: 0;
+  max-width: 55%;
+}
+
+.task-card__due-date mat-icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+}
+
+
+.task-card__avatar {
+  width: 28px;
+  height: 28px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--color-primary);
+  color: white;
+
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.task-card__assignee-name {
+  max-width: 110px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.task-card__assignee--empty {
+  color: var(--color-text-secondary);
+}
+
+.task-card__assignee--empty mat-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+}
+
+.task-card__due-date--overdue {
+  color: var(--color-error);
+  font-weight: 600;
+}
+
+.task-card__description {
+  margin: 0.55rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--color-text-secondary);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 480px) {
+
+  .task-card {
+    padding: 0.75rem;
+  }
+
+  .task-card__title {
+    font-size: 0.875rem;
+  }
+
+  .task-card__meta {
+    font-size: 0.75rem;
+  }
+
+  .task-card__avatar {
+    width: 26px;
+    height: 26px;
+    font-size: 0.65rem;
+  }
+
+  .task-card__assignee-name {
+    max-width: 80px;
+  }
+}
+

@@ -1,0 +1,347 @@
+<div class="members-page">
+
+  <!-- ============================= -->
+  <!-- HEADER -->
+  <!-- ============================= -->
+
+  <header class="page-header">
+
+    <div class="page-header__content">
+
+      <div class="breadcrumbs">
+
+        <span>
+          Organizations
+        </span>
+
+        <mat-icon>
+          chevron_right
+        </mat-icon>
+
+        <span>
+          Members
+        </span>
+
+      </div>
+
+
+      <h1>
+        Members
+      </h1>
+
+      <p>
+        {{ members().length }}
+        members in this organization
+      </p>
+
+    </div>
+
+
+    <app-ui-button
+      label="Invite Member"
+      icon="person_add"
+      variant="primary"
+      (click)="openAddMemberDialog()"
+    />
+
+  </header>
+
+
+  <!-- ============================= -->
+  <!-- ROLE SUMMARY -->
+  <!-- ============================= -->
+
+  <section class="role-summary">
+
+    <div class="role-badge role-badge--owner">
+
+      <mat-icon>
+        workspace_premium
+      </mat-icon>
+
+      <span>
+        Owner
+      </span>
+
+      <strong>
+        {{ ownerCount() }}
+      </strong>
+
+    </div>
+
+
+    <div class="role-badge role-badge--admin">
+
+      <mat-icon>
+        admin_panel_settings
+      </mat-icon>
+
+      <span>
+        Admin
+      </span>
+
+      <strong>
+        {{ adminCount() }}
+      </strong>
+
+    </div>
+
+
+    <div class="role-badge role-badge--member">
+
+      <mat-icon>
+        group
+      </mat-icon>
+
+      <span>
+        Member
+      </span>
+
+      <strong>
+        {{ memberCount() }}
+      </strong>
+
+    </div>
+
+  </section>
+
+
+  <!-- ============================= -->
+  <!-- MEMBERS TABLE -->
+  <!-- ============================= -->
+
+  <section class="members-card">
+
+    <div class="members-table">
+
+
+      <!-- Header -->
+
+      <div class="members-table__header">
+
+        <div>
+          Name
+        </div>
+
+        <div>
+          Email
+        </div>
+
+        <div>
+          Role
+        </div>
+
+        <div>
+          Joined
+        </div>
+
+        <div>
+        </div>
+
+      </div>
+
+
+      <!-- Rows -->
+
+      @for (member of members(); track member.id) {
+
+        <div class="member-row">
+
+
+          <!-- Name -->
+
+          <div class="member-name">
+
+            <div class="member-avatar">
+              {{ getInitials(member) }}
+            </div>
+
+            <div class="member-name__info">
+
+              <span class="member-name__full">
+                {{ member.fullName }}
+              </span>
+
+              <span class="member-name__email mobile-only">
+                {{ member.email }}
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- Email -->
+
+          <div class="member-email">
+            {{ member.email }}
+          </div>
+
+
+          <!-- Role -->
+
+          <div class="member-role">
+
+            @if (member.role === OrganizationRoleMember.OWNER) {
+
+              <span class="role-pill role-pill--owner">
+
+                <mat-icon>
+                  workspace_premium
+                </mat-icon>
+
+                Owner
+
+              </span>
+
+            } @else {
+
+              <button
+                class="role-pill role-pill--clickable"
+                [matMenuTriggerFor]="roleMenu"
+              >
+
+                @if (
+                  member.role === OrganizationRoleMember.ADMIN
+                ) {
+
+                  <mat-icon>
+                    admin_panel_settings
+                  </mat-icon>
+
+                } @else {
+
+                  <mat-icon>
+                    group
+                  </mat-icon>
+
+                }
+
+                {{ formatRole(member.role) }}
+
+                <mat-icon class="role-arrow">
+                  expand_more
+                </mat-icon>
+
+              </button>
+
+
+              <mat-menu #roleMenu="matMenu">
+
+                <button
+                  mat-menu-item
+                  (click)="updateRole(
+                    member,
+                    OrganizationRoleMember.ADMIN
+                  )"
+                >
+
+                  <mat-icon>
+                    admin_panel_settings
+                  </mat-icon>
+
+                  <span>
+                    Admin
+                  </span>
+
+                </button>
+
+
+                <button
+                  mat-menu-item
+                  (click)="updateRole(
+                    member,
+                    OrganizationRoleMember.MEMBER
+                  )"
+                >
+
+                  <mat-icon>
+                    group
+                  </mat-icon>
+
+                  <span>
+                    Member
+                  </span>
+
+                </button>
+
+              </mat-menu>
+
+            }
+
+          </div>
+
+
+          <!-- Joined -->
+
+          <div class="member-joined">
+
+            {{ formatJoinedDate(member.joinedAt) }}
+
+          </div>
+
+
+          <!-- Actions -->
+
+          <div class="member-actions">
+
+            @if (
+              member.role !== OrganizationRoleMember.OWNER
+            ) {
+
+              <button
+                type="button"
+                class="member-action member-action--delete"
+                matTooltip="Remove member"
+                (click)="deleteMember(member)"
+              >
+
+                <mat-icon>
+                  delete
+                </mat-icon>
+
+              </button>
+
+            }
+
+          </div>
+
+        </div>
+
+      }
+
+
+      <!-- Empty -->
+
+      @if (members().length === 0) {
+
+        <div class="empty-state">
+
+          <mat-icon>
+            group
+          </mat-icon>
+
+          <h2>
+            No members yet
+          </h2>
+
+          <p>
+            Invite people to collaborate in this organization.
+          </p>
+
+          <app-ui-button
+            label="Invite Member"
+            icon="person_add"
+            variant="primary"
+            (click)="openAddMemberDialog()"
+          />
+
+        </div>
+
+      }
+
+    </div>
+
+  </section>
+
+</div>

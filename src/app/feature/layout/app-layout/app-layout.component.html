@@ -1,10 +1,10 @@
-<div class="layout">
-    <app-nav-bar />
-    <div class="body">
-        <app-side-bar />
-        <main class="content">
-            <router-outlet />
-        </main>
+<div class="app-layout">
+  <app-side-bar class="sidebar"/>
 
-    </div>
+  <div class="main-area">
+    <app-nav-bar />
+    <main class="main-content">
+      <router-outlet />
+    </main>
+  </div>
 </div>

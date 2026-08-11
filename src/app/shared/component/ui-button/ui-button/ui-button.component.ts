@@ -25,4 +25,6 @@ export class UiButtonComponent {
   @Input()
   disabled = false;
 
+  @Input() variant: 'primary' | 'secondary' | 'ghost' = 'primary';
+
 }

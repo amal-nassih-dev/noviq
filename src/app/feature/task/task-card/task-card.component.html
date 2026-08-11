@@ -1,0 +1,61 @@
+<article class="task-card" (click)="edit.emit(task)">
+  <div class="task-card__top">
+    <span [class]="priorityClass(task.priority)">{{ task.priority }}</span>
+  </div>
+
+  <h3 class="task-card__title">{{ task.title }}</h3>
+  <!-- Description -->
+  @if (task.description) {
+
+    <p class="task-card__description">
+      {{ task.description }}
+    </p>
+
+  }
+  <div class="task-card__meta">
+
+  <!-- Due date -->
+  @if (task.dueDate) {
+
+  <div
+    class="task-card__due-date"
+    [class.task-card__due-date--overdue]="isOverdue(task)"
+  >
+
+    <mat-icon>calendar_today</mat-icon>
+
+    <span>
+      {{ task.dueDate | date:'MMM d' }}
+    </span>
+
+  </div>
+
+}
+
+  <!-- Assignee -->
+  @if (getAssignee(task); as member) {
+    <div class="task-card__assignee">
+      <div class="task-card__avatar">
+        {{ getMemberInitials(member) }}
+      </div>
+
+      <span class="task-card__assignee-name">
+        {{ member.fullName }}
+      </span>
+
+    </div>
+
+  } @else {
+
+    <div class="task-card__assignee task-card__assignee--empty">
+
+    <mat-icon>person_outline</mat-icon>
+      <span>
+        Unassigned
+      </span>
+    </div>
+
+  }
+
+</div>
+</article>

@@ -16,3 +16,178 @@
 .mat-mdc-text-field-wrapper {
     border-radius: var(--radius-md) !important;
 }
+
+/* Make all Material buttons use the app font */
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-unelevated-button,
+.mat-mdc-outlined-button,
+.mat-mdc-icon-button {
+  font-family: inherit !important;
+  letter-spacing: normal !important;
+}
+
+/* global */
+::ng-deep .confirm-dialog-panel .mat-mdc-dialog-container {
+  padding: 0 !important;
+  border-radius: var(--radius-lg) !important;
+  overflow: hidden;
+}
+
+::ng-deep .confirm-dialog-panel .mat-mdc-dialog-surface {
+  padding: 0 !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-lg) !important;
+  background: transparent !important;
+}
+
+/* =========================================
+   Global Angular Material Menus
+   ========================================= */
+
+.mat-mdc-menu-panel {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-lg) !important;
+
+  min-width: 180px !important;
+  padding: 6px 0 !important;
+
+  overflow: hidden;
+}
+
+/* Menu content */
+.mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+/* Menu item */
+.mat-mdc-menu-item {
+  min-height: 42px !important;
+
+  margin: 2px 6px !important;
+
+  width: calc(100% - 12px) !important;
+
+  border-radius: var(--radius-sm) !important;
+
+  color: var(--color-text) !important;
+
+  font-family: inherit !important;
+  font-size: 0.9rem !important;
+
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
+}
+
+/* Hover */
+.mat-mdc-menu-item:hover {
+  background: var(--color-background-secondary) !important;
+}
+
+/* Focus */
+.mat-mdc-menu-item:focus {
+  background: var(--color-background-secondary) !important;
+}
+
+/* Icons */
+.mat-mdc-menu-item .mat-icon {
+  color: var(--color-text-secondary) !important;
+
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+
+  margin-right: 12px !important;
+}
+
+/* Divider */
+.mat-mdc-menu-divider {
+  margin: 6px 0 !important;
+  border-top-color: var(--color-border) !important;
+}
+
+/* =========================================
+   Destructive Menu Actions
+   ========================================= */
+
+.mat-mdc-menu-item.danger {
+  color: var(--color-error) !important;
+}
+
+.mat-mdc-menu-item.danger .mat-icon {
+  color: var(--color-error) !important;
+}
+
+.mat-mdc-menu-item.danger:hover {
+  background: color-mix(
+    in srgb,
+    var(--color-error) 8%,
+    transparent
+  ) !important;
+}
+
+.mat-mdc-menu-panel {
+  min-width: 190px !important;
+}
+
+.cdk-overlay-container,
+.cdk-overlay-pane {
+  font-family: var(--font-family, Inter, Roboto, Arial, sans-serif);
+}
+
+.mat-mdc-dialog-container,
+.mat-mdc-dialog-container *,
+.mat-mdc-menu-panel,
+.mat-mdc-menu-panel *,
+.mat-mdc-select-panel,
+.mat-mdc-select-panel *,
+.mat-mdc-autocomplete-panel,
+.mat-mdc-autocomplete-panel * {
+  font-family: inherit;
+}
+
+/* =========================================================
+   RESPONSIVE MATERIAL DIALOGS
+   ========================================================= */
+
+.mat-mdc-dialog-container {
+  max-width: 100vw;
+}
+
+@media (max-width: 600px) {
+
+  .cdk-overlay-pane {
+    max-width: calc(100vw - 1.5rem) !important;
+    width: calc(100vw - 1.5rem) !important;
+  }
+
+  .mat-mdc-dialog-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .mat-mdc-dialog-content {
+    max-height: 70vh;
+  }
+}
+
+
+mat-form-field {
+  max-width: 100%;
+}
+
+@media (max-width: 600px) {
+
+  .mat-mdc-dialog-content {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .mat-mdc-dialog-actions {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}

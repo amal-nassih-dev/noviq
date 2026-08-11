@@ -1,0 +1,94 @@
+<header class="page-header">
+    <div>
+        <h1>Organizations</h1>
+        <p>
+            Manage your organizations and collaborate on projects.
+        </p>
+    </div>
+@if (organizations().length !== 0) {
+    <app-ui-button
+      label="New Organization"
+      icon="add"
+      variant="primary"
+      (click)="openCreateDialog()">
+    </app-ui-button>
+  }
+
+</header>
+@if (loading()) {
+
+<section class="organization-grid">
+
+    @for (_ of [1,2,3,4]; track $index) {
+
+        <app-ui-card class="org-card skeleton">
+
+            <div class="skeleton-title"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line short"></div>
+
+        </app-ui-card>
+
+    }
+
+</section>
+
+} @else if (organizations().length === 0) {
+
+    <div class="empty-state">
+
+        <mat-icon>business</mat-icon>
+
+        <h2>No organizations yet</h2>
+
+        <p>Organizations help you group projects and collaborate with your team.</p>
+
+        <app-ui-button
+            label="Create your first organization"
+            icon="add"
+            variant="primary"
+            (click)="openCreateDialog()"
+            >
+        </app-ui-button>
+
+    </div>
+
+} @else {
+
+    <section class="organization-grid">
+
+        @for (organization of organizations(); track organization.id) {
+
+            <app-organization-card
+                [organization]="organization"
+                (edit)="openEditDialog($event)"
+                (delete)="openDeleteDialog($event)"
+                (addMember)="openAddMemberDialog($event.id)"
+                >
+            </app-organization-card>
+
+        }
+
+    </section>
+
+}
+
+@if(error()){
+
+<div class="empty-state">
+
+    <mat-icon>error_outline</mat-icon>
+
+    <h2>Something went wrong</h2>
+
+    <p>{{ error() }}</p>
+
+    <app-ui-button
+        label="Retry"
+        icon="refresh"
+        >
+    </app-ui-button>
+
+</div>
+
+}

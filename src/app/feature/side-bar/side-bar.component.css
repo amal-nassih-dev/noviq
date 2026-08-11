@@ -1,148 +1,982 @@
+/* =========================================
+   SIDEBAR
+   ========================================= */
+
 .sidebar {
-  width: 240px;
+  width: 250px;
   height: 100%;
-  background: var(--color-surface);
-  border-right: 1px solid color-mix(in srgb, var(--color-text-secondary) 14%, transparent);
+
   display: flex;
   flex-direction: column;
-  padding: var(--spacing-md);
-  gap: 4px;
+
+  padding: 1rem;
+
+  background: var(--color-surface);
+
+  border-right: 1px solid
+    color-mix(
+      in srgb,
+      var(--color-text-secondary) 14%,
+      transparent
+    );
+
   overflow-x: hidden;
   overflow-y: auto;
+
   flex-shrink: 0;
-  transition: width 0.25s ease;
+
+  transition:
+    width 0.25s ease,
+    padding 0.25s ease;
 }
 
-/* Collapsed state */
+
+/* =========================================
+   COLLAPSED SIDEBAR
+   ========================================= */
+
 .sidebar.collapsed {
   width: 72px;
-  padding: var(--spacing-md) 0.6rem;
+  padding: 1rem 0.6rem;
 }
 
 
-/* Navigation links */
-.sidebar a {
+/* =========================================
+   BRAND
+   ========================================= */
+
+.sidebar__brand {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.7rem 1rem;
-  border-radius: var(--radius-md);
-  text-decoration: none;
-  color: var(--color-text-secondary);
-  font-weight: 500;
-  font-size: 0.95rem;
+
+  gap: 0.65rem;
+
+  min-height: 42px;
+
+  padding: 0.5rem 0.5rem 1.25rem;
+
+  flex-shrink: 0;
+}
+
+
+.sidebar__logo {
+  width: 32px;
+  height: 32px;
+
+  flex-shrink: 0;
+
+  border-radius: 8px;
+}
+
+
+.sidebar__title {
+  font-size: 1.3rem;
+  font-weight: 700;
+
+  color: var(--color-text);
+
+  letter-spacing: -0.02em;
+
   white-space: nowrap;
-  transition: background 0.2s ease, color 0.2s ease;
-  overflow: hidden;
 }
 
-.sidebar.collapsed a {
+
+.sidebar__beta {
+  margin-left: auto;
+
+  padding: 0.25rem 0.45rem;
+
+  border-radius: 6px;
+
+  background: var(--color-background-secondary);
+
+  color: var(--color-primary);
+
+  font-size: 0.7rem;
+  font-weight: 600;
+
+  text-transform: lowercase;
+}
+
+
+/* Collapsed brand */
+
+.sidebar.collapsed .sidebar__brand {
   justify-content: center;
-  padding: 0.7rem 0;
-  gap: 0;
+
+  padding-left: 0;
+  padding-right: 0;
 }
 
-/* Icon */
-.sidebar a mat-icon {
-  font-size: 20px;
+
+.sidebar.collapsed .sidebar__title,
+.sidebar.collapsed .sidebar__beta {
+  display: none;
+}
+
+
+/* =========================================
+   ORGANIZATION SWITCHER
+   ========================================= */
+
+.organization-switcher {
+  position: relative;
+
+  margin-bottom: 0.75rem;
+
+  flex-shrink: 0;
+}
+
+
+.organization-switcher__button {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 0.7rem;
+
+  padding: 0.65rem;
+
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--color-text-secondary) 18%,
+      transparent
+    );
+
+  border-radius: var(--radius-lg);
+
+  background: var(--color-background-secondary);
+
+  color: var(--color-text);
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.organization-switcher__button:hover {
+  border-color: color-mix(
+    in srgb,
+    var(--color-primary) 50%,
+    transparent
+  );
+
+  background: color-mix(
+    in srgb,
+    var(--color-primary) 5%,
+    var(--color-background-secondary)
+  );
+}
+
+
+.organization-switcher__button mat-icon {
   width: 20px;
   height: 20px;
-  flex-shrink: 0;
+
+  margin-left: auto;
+
   color: var(--color-text-secondary);
-  transition: color 0.2s ease;
+
+  font-size: 20px;
 }
 
-/* Label */
-.sidebar a .label {
-  opacity: 1;
-  transition: opacity 0.15s ease;
+
+/* =========================================
+   ORGANIZATION AVATAR
+   ========================================= */
+
+.organization-avatar {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 8px;
+
+  background: var(--color-primary);
+
+  color: white;
+
+  font-size: 0.9rem;
+  font-weight: 700;
+
+  text-transform: uppercase;
 }
 
-.sidebar.collapsed a .label {
-  opacity: 0;
-  width: 0;
+
+.organization-name {
+  min-width: 0;
+
   overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
-/* Hover */
-.sidebar a:hover {
-  background: var(--color-background-secondary);
+
+/* =========================================
+   COLLAPSED ORGANIZATION
+   ========================================= */
+
+.sidebar.collapsed .organization-switcher__button {
+  justify-content: center;
+
+  padding: 0.55rem;
+}
+
+
+.sidebar.collapsed .organization-name,
+.sidebar.collapsed .organization-switcher__button mat-icon {
+  display: none;
+}
+
+
+/* =========================================
+   ORGANIZATION DROPDOWN
+   ========================================= */
+
+.organization-menu {
+  position: absolute;
+
+  z-index: 1000;
+
+  top: calc(100% + 0.5rem);
+
+  left: 0;
+  right: 0;
+
+  padding: 0.4rem;
+
+  background: var(--color-surface);
+
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--color-text-secondary) 18%,
+      transparent
+    );
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-lg);
+}
+
+
+/* =========================================
+   ORGANIZATION OPTION
+   ========================================= */
+
+.organization-option {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 0.7rem;
+
+  padding: 0.6rem;
+
+  border: none;
+
+  border-radius: var(--radius-md);
+
+  background: transparent;
+
   color: var(--color-text);
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition: background 0.15s ease;
 }
 
-.sidebar a:hover mat-icon {
+
+.organization-option:hover {
+  background: var(--color-background-secondary);
+}
+
+
+.organization-option__content {
+  min-width: 0;
+
+  flex: 1;
+}
+
+
+.organization-option__name {
+  display: block;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+
+.organization-check {
+  flex-shrink: 0;
+
   color: var(--color-primary);
 }
 
-/* Active */
-.sidebar a.active {
-  background: var(--color-primary);
-  color: white;
+
+/* =========================================
+   ORGANIZATION DIVIDER
+   ========================================= */
+
+.organization-divider {
+  height: 1px;
+
+  margin: 0.35rem 0;
+
+  background: color-mix(
+    in srgb,
+    var(--color-text-secondary) 12%,
+    transparent
+  );
 }
 
-.sidebar a.active mat-icon {
-  color: white;
-}
 
-/* Toggle sits at the bottom */
-.sidebar {
-  width: 240px;
-  height: 100%;
-  background: var(--color-surface);
-  border-right: 1px solid color-mix(in srgb, var(--color-text-secondary) 14%, transparent);
+/* =========================================
+   MANAGE ORGANIZATIONS
+   ========================================= */
+
+.manage-organizations {
+  width: 100%;
+
   display: flex;
-  flex-direction: column;
-  padding: var(--spacing-md);
-  overflow-x: hidden;
-  overflow-y: auto;
-  flex-shrink: 0;
-  transition: width 0.25s ease;
+  align-items: center;
+
+  gap: 0.7rem;
+
+  padding: 0.65rem;
+
+  border: none;
+
+  border-radius: var(--radius-md);
+
+  background: transparent;
+
+  color: var(--color-primary);
+
+  cursor: pointer;
+
+  font-size: 0.85rem;
+
+  text-align: left;
+
+  transition: background 0.15s ease;
 }
 
-.sidebar.collapsed {
-  width: 72px;
-  padding: var(--spacing-md) 0.6rem;
+
+.manage-organizations:hover {
+  background: var(--color-background-secondary);
 }
+
+
+.manage-organizations mat-icon {
+  width: 20px;
+  height: 20px;
+
+  font-size: 20px;
+}
+
+
+/* =========================================
+   NAVIGATION
+   ========================================= */
 
 .sidebar__nav {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+
+  gap: 0.2rem;
+
   flex: 1;
+
+  min-height: 0;
 }
 
-.sidebar__toggle:hover {
+
+/* =========================================
+   NAV ITEM
+   ========================================= */
+
+.nav-item {
+  display: flex;
+  align-items: center;
+
+  gap: 0.75rem;
+
+  min-height: 40px;
+
+  padding: 0.65rem 0.75rem;
+
+  border-radius: var(--radius-md);
+
+  text-decoration: none;
+
+  color: var(--color-text-secondary);
+
+  font-size: 0.92rem;
+  font-weight: 500;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+
+.nav-item mat-icon {
+  width: 20px;
+  height: 20px;
+
+  flex-shrink: 0;
+
+  color: var(--color-text-secondary);
+
+  font-size: 20px;
+
+  transition: color 0.15s ease;
+}
+
+
+.nav-item:hover {
   background: var(--color-background-secondary);
+
+  color: var(--color-text);
+}
+
+
+.nav-item:hover mat-icon {
   color: var(--color-primary);
 }
 
-/* When collapsed, keep the button centered */
-.sidebar.collapsed .sidebar__toggle {
-  width: 100%;
+
+/* =========================================
+   ACTIVE NAV ITEM
+   ========================================= */
+
+.nav-item.active {
+  background: color-mix(
+    in srgb,
+    var(--color-primary) 12%,
+    transparent
+  );
+
+  color: var(--color-primary);
+
+  font-weight: 600;
 }
+
+
+.nav-item.active mat-icon {
+  color: var(--color-primary);
+}
+
+
+/* =========================================
+   SECTION TITLE
+   ========================================= */
+
+.nav-section-title {
+  margin-top: 0.9rem;
+
+  padding: 0.65rem 0.75rem 0.4rem;
+
+  color: var(--color-text-secondary);
+
+  font-size: 0.68rem;
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.1em;
+}
+
+
+.sidebar.collapsed .nav-section-title {
+  display: none;
+}
+
+
+/* =========================================
+   PROJECT LIST
+   ========================================= */
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.1rem;
+
+  margin-top: 0.15rem;
+}
+
+
+/* =========================================
+   PROJECT ITEM
+   ========================================= */
+
+.project-item {
+  display: flex;
+  align-items: center;
+
+  gap: 0.7rem;
+
+  min-height: 36px;
+
+  padding: 0.5rem 0.75rem;
+
+  border-radius: var(--radius-md);
+
+  text-decoration: none;
+
+  color: var(--color-text-secondary);
+
+  font-size: 0.88rem;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+
+.project-item:hover {
+  background: var(--color-background-secondary);
+
+  color: var(--color-text);
+}
+
+
+.project-item.active {
+  background: color-mix(
+    in srgb,
+    var(--color-primary) 10%,
+    transparent
+  );
+
+  color: var(--color-primary);
+
+  font-weight: 600;
+}
+
+
+/* =========================================
+   PROJECT DOT
+   ========================================= */
+
+.project-dot {
+  width: 8px;
+  height: 8px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: var(--color-primary);
+}
+
+
+/* =========================================
+   PROJECT NAME
+   ========================================= */
+
+.project-name {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  flex: 1;
+}
+
+
+/* =========================================
+   PROJECT COUNT
+   ========================================= */
+
+.project-count {
+  flex-shrink: 0;
+
+  color: var(--color-text-secondary);
+
+  font-size: 0.72rem;
+}
+
+
+/* =========================================
+   ADD PROJECT
+   ========================================= */
+
+.add-project {
+  display: flex;
+  align-items: center;
+
+  gap: 0.7rem;
+
+  width: 100%;
+
+  min-height: 36px;
+
+  margin-top: 0.25rem;
+
+  padding: 0.5rem 0.75rem;
+
+  border: none;
+
+  border-radius: var(--radius-md);
+
+  background: transparent;
+
+  color: var(--color-text-secondary);
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+  font-size: 0.85rem;
+
+  text-align: left;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+
+.add-project:hover {
+  background: var(--color-background-secondary);
+
+  color: var(--color-primary);
+}
+
+
+.add-project mat-icon {
+  width: 20px;
+  height: 20px;
+
+  flex-shrink: 0;
+
+  font-size: 19px;
+}
+
+
+/* =========================================
+   BOTTOM
+   ========================================= */
+
+.sidebar__bottom {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.2rem;
+
+  margin-top: auto;
+
+  padding-top: 0.75rem;
+
+  border-top: 1px solid
+    color-mix(
+      in srgb,
+      var(--color-text-secondary) 10%,
+      transparent
+    );
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================
+   COLLAPSE BUTTON
+   ========================================= */
 
 .sidebar__toggle {
   display: flex;
   align-items: center;
-  justify-content: flex-end;          /* ← right aligned */
+
+  justify-content: flex-end;
+
   width: 100%;
-  height: 40px;
-  padding-right: 0.5rem;
+  height: 38px;
+
+  padding: 0 0.5rem;
+
   border: none;
+
   border-radius: var(--radius-md);
+
   background: transparent;
+
   color: var(--color-text-secondary);
+
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
 }
+
+
+.sidebar__toggle:hover {
+  background: var(--color-background-secondary);
+
+  color: var(--color-primary);
+}
+
+
+.sidebar__toggle mat-icon {
+  width: 20px;
+  height: 20px;
+
+  font-size: 20px;
+}
+
 
 .sidebar.collapsed .sidebar__toggle {
   justify-content: center;
+
+  padding: 0;
+}
+
+
+/* =========================================
+   COLLAPSED NAV
+   ========================================= */
+
+.sidebar.collapsed .nav-item {
+  justify-content: center;
+
+  gap: 0;
+
+  padding-left: 0;
   padding-right: 0;
 }
 
-.sidebar__toggle mat-icon {
-  font-size: 22px;
-  width: 22px;
-  height: 22px;
+
+.sidebar.collapsed .nav-item .label {
+  display: none;
+}
+
+
+.sidebar.collapsed .project-list {
+  gap: 0.15rem;
+}
+
+
+.sidebar.collapsed .project-item {
+  justify-content: center;
+
+  gap: 0;
+
+  padding-left: 0;
+  padding-right: 0;
+}
+
+
+.sidebar.collapsed .project-name,
+.sidebar.collapsed .project-count {
+  display: none;
+}
+
+
+.sidebar.collapsed .add-project {
+  justify-content: center;
+
+  padding-left: 0;
+  padding-right: 0;
+}
+
+
+.sidebar.collapsed .add-project .label {
+  display: none;
+}
+
+
+/* =========================================
+   SCROLLBAR
+   ========================================= */
+
+.sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: color-mix(
+    in srgb,
+    var(--color-text-secondary) 20%,
+    transparent
+  );
+
+  border-radius: 10px;
+}
+
+/* =========================================
+   SEE ALL PROJECTS
+   ========================================= */
+
+.see-all-projects {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 0.5rem;
+
+  min-height: 34px;
+
+  margin-top: 0.15rem;
+
+  padding: 0.45rem 0.75rem;
+
+  border-radius: var(--radius-md);
+
+  color: var(--color-primary);
+
+  font-size: 0.82rem;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+
+.see-all-projects:hover {
+  background: color-mix(
+    in srgb,
+    var(--color-primary) 8%,
+    transparent
+  );
+}
+
+
+.see-all-projects mat-icon {
+  width: 17px;
+  height: 17px;
+
+  font-size: 17px;
+
+  flex-shrink: 0;
+}
+
+.sidebar.collapsed .see-all-projects {
+  justify-content: center;
+
+  padding-left: 0;
+  padding-right: 0;
+}
+
+
+.sidebar.collapsed .see-all-projects {
+  display: none;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 900px) {
+
+  .sidebar {
+    width: 220px;
+  }
+
+  .sidebar.collapsed {
+    width: 64px;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .sidebar {
+    width: 64px;
+    padding: 1rem 0.6rem;
+  }
+
+  .sidebar__title,
+  .sidebar__beta,
+  .organization-name,
+  .organization-switcher__button mat-icon,
+  .sidebar .label,
+  .nav-section-title,
+  .project-name,
+  .project-count,
+  .see-all-projects {
+    display: none;
+  }
+
+  .sidebar__brand {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .organization-switcher__button {
+    justify-content: center;
+    padding: 0.55rem;
+  }
+
+  .nav-item {
+    justify-content: center;
+    gap: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .project-item {
+    justify-content: center;
+    gap: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .add-project {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .sidebar__toggle {
+    justify-content: center;
+  }
+
 }

@@ -1,0 +1,30 @@
+<div class="confirm-dialog">
+
+  <header class="confirm-dialog__header">
+    <h2>{{ data.title }}</h2>
+    <button type="button" class="confirm-dialog__close" (click)="cancel()" aria-label="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <div class="confirm-dialog__body">
+    <p>{{ data.message }}</p>
+  </div>
+
+  <footer class="confirm-dialog__footer">
+    <button
+      type="button"
+      class="btn btn--danger"
+      (click)="confirm()">
+      {{ data.confirmLabel || 'Delete' }}
+    </button>
+
+    <button
+      type="button"
+      class="btn btn--ghost"
+      (click)="cancel()">
+      {{ data.cancelLabel || 'Cancel' }}
+    </button>
+  </footer>
+
+</div>
