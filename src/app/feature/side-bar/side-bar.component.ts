@@ -38,7 +38,7 @@ import { NotificationService } from '../../core/services/notification.service';
     MatTooltipModule
   ],
   templateUrl: './side-bar.component.html',
-  styleUrls: ['./side-bar.component.css']
+  styleUrl: './side-bar.component.css'
 })
 export class SideBarComponent{
 

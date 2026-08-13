@@ -34,7 +34,7 @@ import { ErrorHandlerService } from '../../../core/services/error-handler.servic
     RouterLink
   ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrl: './login.component.css'
 })
 export class LoginComponent {
   

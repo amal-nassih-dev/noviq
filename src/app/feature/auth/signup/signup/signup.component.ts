@@ -25,7 +25,7 @@ import { finalize } from 'rxjs';
     RouterLink
 ],
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  styleUrl: './signup.component.css'
 })
 export class SignupComponent {
   protected readonly formBuilder = inject(FormBuilder);
