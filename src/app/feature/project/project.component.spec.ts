@@ -4,17 +4,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ProjectComponent } from './project.component';
 import { OrganizationalContextService } from '../../core/services/organizational-context.service';
 import { of } from 'rxjs';
+import { createOrgContextStub } from '../../../testing/test-helpers';
 
 describe('ProjectComponent', () => {
   let component: ProjectComponent;
   let fixture: ComponentFixture<ProjectComponent>;
 
   beforeEach(async () => {
-      const orgContextStub = {
-        members: () => [],
-        currentOrganization: () => null,
-        projects: () => []
-      } as any;
+      const orgContextStub = createOrgContextStub();
 
       await TestBed.configureTestingModule({
         imports: [ProjectComponent, HttpClientTestingModule, RouterTestingModule],
