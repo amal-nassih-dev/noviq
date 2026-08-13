@@ -15,8 +15,8 @@ import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
 import { RouterLink } from '@angular/router';
-import { ApiError } from '../../../core/models/auth/api-error';
 import { AuthStateService } from '../../../core/services/auth-state.service';
+import { ErrorHandlerService } from '../../../core/services/error-handler.service';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +34,7 @@ import { AuthStateService } from '../../../core/services/auth-state.service';
     RouterLink
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   
@@ -45,6 +45,8 @@ export class LoginComponent {
   protected readonly isLoading = signal(false);
   protected readonly authStateService = inject(AuthStateService);
   protected readonly errorMessage = signal('');
+  private readonly errorHandler =
+  inject(ErrorHandlerService);
   
   loginForm = this.formBuilder.nonNullable.group({
     email : [
@@ -76,22 +78,39 @@ export class LoginComponent {
     ).subscribe(
       {
         next: response => {
-            this.authStateService.login(response);
+            this.authStateService.setAuthentication(
+              response.token,
+              response.user
+            );
             this.router.navigate(['/']); // navigate
         },
         error : err => {
-          const apiError = err.error as ApiError;
-          if (apiError.fieldErrors?.length) {
-            apiError.fieldErrors.forEach(fieldError => {
-              this.loginForm.get(fieldError.field)?.setErrors({
-                server: fieldError.message
-              });
+          const fieldErrors =
+            this.errorHandler.getFieldErrors(err);
+
+          if (fieldErrors.length > 0) {
+
+            fieldErrors.forEach(fieldError => {
+
+              this.loginForm
+                .get(fieldError.field)
+                ?.setErrors({
+                  server: fieldError.message
+                });
+
             });
 
             this.errorMessage.set('');
-          } else {
-            this.errorMessage.set(apiError.message);
+
+            return;
           }
+
+          this.errorMessage.set(
+            this.errorHandler.getMessage(
+              err,
+              'Unable to log in. Please check your credentials.'
+            )
+          );
         }
       }
     )

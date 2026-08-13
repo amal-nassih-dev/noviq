@@ -1,16 +1,21 @@
 :host {
   display: block;
+
+  width: 100%;
   height: 100vh;
   height: 100dvh;
 }
 
-
 .app-layout {
   display: flex;
-  height: 100%;
-  overflow: hidden;
-}
 
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  background: var(--color-background);
+}
 
 .main-area {
   flex: 1;
@@ -24,7 +29,6 @@
   overflow: hidden;
 }
 
-
 .main-content {
   flex: 1;
 
@@ -36,30 +40,77 @@
   overflow: auto;
 
   background: var(--color-background);
+
+  box-sizing: border-box;
 }
 
 
-/* =========================================
-   TABLET
-   ========================================= */
+/* =========================================================
+   MOBILE OVERLAY
+   ========================================================= */
 
-@media (max-width: 900px) {
+.mobile-sidebar-overlay {
+  position: fixed;
 
-  .main-content {
-    padding: var(--spacing-lg);
+  inset: 0;
+
+  z-index: 1500;
+
+  width: 100%;
+  height: 100%;
+
+  border: none;
+
+  background: rgba(15, 23, 42, 0.4);
+
+  cursor: pointer;
+
+  animation: overlayFadeIn 0.2s ease;
+}
+
+@keyframes overlayFadeIn {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 
 }
 
 
-/* =========================================
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .main-content {
+    padding: var(--spacing-md);
+  }
+
+}
+
+
+/* =========================================================
    MOBILE
-   ========================================= */
+   ========================================================= */
 
 @media (max-width: 768px) {
 
   .main-content {
-    padding: 1rem;
+    padding: var(--spacing-md);
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .main-content {
+    padding: var(--spacing-sm);
   }
 
 }

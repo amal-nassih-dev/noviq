@@ -8,6 +8,16 @@
   [class.ui-btn--secondary]="variant === 'secondary'"
   [class.ui-btn--ghost]="variant === 'ghost'">
 
-  {{label}}
+  @if (icon && position === 'left') {
+    <mat-icon>{{ icon }}</mat-icon>
+  }
+
+  @if (label) {
+    <span>{{ label }}</span>
+  }
+
+  @if (icon && position === 'right') {
+    <mat-icon>{{ icon }}</mat-icon>
+  }
 
 </button>

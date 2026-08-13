@@ -1,28 +1,34 @@
 import {
   Component,
-  DestroyRef,
-  inject,
-  OnInit,
-  computed
+  computed,
+  inject
 } from '@angular/core';
-
-import { ActivatedRoute } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter, switchMap } from 'rxjs';
 
+import { OrganizationMemberDialogComponent }
+  from '../organization-member-dialog/organization-member-dialog.component';
+
+import { OrgMemberResponse }
+  from '../../core/models/organization-member/organization-member-response';
+
+import { OrganizationRoleMember }
+  from '../../core/models/organization-member/organization-role';
+
+import { UiButtonComponent }
+  from '../../shared/component/ui-button/ui-button/ui-button.component';
+
+import { UiConfirmDialogComponent }
+  from '../../shared/component/ui-confirm-dialog/ui-confirm-dialog.component';
+
+import { OrganizationalContextService }
+  from '../../core/services/organizational-context.service';
 import { OrganizationMemberService } from '../../core/services/organization-member.service';
-import { OrganizationMemberDialogComponent } from '../organization-member-dialog/organization-member-dialog.component';
-
-import { OrgMemberResponse } from '../../core/models/organization-member/organization-member-response';
-import { OrganizationRoleMember } from '../../core/models/organization-member/organization-role';
-
-import { UiButtonComponent } from '../../shared/component/ui-button/ui-button/ui-button.component';
-import { UiConfirmDialogComponent } from '../../shared/component/ui-confirm-dialog/ui-confirm-dialog.component';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-org-members',
@@ -35,83 +41,58 @@ import { UiConfirmDialogComponent } from '../../shared/component/ui-confirm-dial
   templateUrl: './org-members.component.html',
   styleUrl: './org-members.component.css'
 })
-export class OrgMembersComponent implements OnInit {
+export class OrgMembersComponent {
 
-  private readonly route = inject(ActivatedRoute);
   private readonly dialog = inject(MatDialog);
-  private readonly destroyRef = inject(DestroyRef);
 
-  protected readonly memberService =
+  private readonly organizationContext =
+    inject(OrganizationalContextService);
+
+  private readonly memberService =
     inject(OrganizationMemberService);
 
   protected readonly members =
-    this.memberService.members;
+    this.organizationContext.members;
+
+  protected readonly currentOrganization =
+    this.organizationContext.currentOrganization;
 
   protected readonly OrganizationRoleMember =
     OrganizationRoleMember;
 
-  protected organizationId!: number;
+  private readonly notification = inject(NotificationService);
 
-  /*
-   * Role counts
-   */
+  
 
   protected readonly ownerCount = computed(() =>
     this.members().filter(
-      member => member.role === OrganizationRoleMember.OWNER
+      member =>
+        member.role === OrganizationRoleMember.OWNER
     ).length
   );
 
   protected readonly adminCount = computed(() =>
     this.members().filter(
-      member => member.role === OrganizationRoleMember.ADMIN
+      member =>
+        member.role === OrganizationRoleMember.ADMIN
     ).length
   );
 
   protected readonly memberCount = computed(() =>
     this.members().filter(
-      member => member.role === OrganizationRoleMember.MEMBER
+      member =>
+        member.role === OrganizationRoleMember.MEMBER
     ).length
   );
 
-
-  ngOnInit(): void {
-
-    this.route.paramMap
-      .pipe(
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe(params => {
-
-        const id = params.get('orgId');
-
-        if (!id) {
-          return;
-        }
-
-        this.organizationId = Number(id);
-
-        this.loadMembers();
-      });
-  }
-
-
-  private loadMembers(): void {
-
-    this.memberService
-      .findAll(this.organizationId)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe();
-  }
-
-
-  /*
-   * Add member
-   */
-
   openAddMemberDialog(): void {
+
+    const organization =
+      this.currentOrganization();
+
+    if (!organization) {
+      return;
+    }
 
     const dialogRef = this.dialog.open(
       OrganizationMemberDialogComponent,
@@ -119,7 +100,7 @@ export class OrgMembersComponent implements OnInit {
         width: '500px',
         maxWidth: 'calc(100vw - 1.5rem)',
         data: {
-          organizationId: this.organizationId
+          organizationId: organization.id
         }
       }
     );
@@ -129,19 +110,19 @@ export class OrgMembersComponent implements OnInit {
         filter(result => !!result),
         switchMap(result =>
           this.memberService.addMember(
-            this.organizationId,
+            organization.id,
             result
           )
-        ),
-        takeUntilDestroyed(this.destroyRef)
+        )
       )
-      .subscribe();
+      .subscribe({
+        next: () => {
+          this.notification.success(
+            'Member added successfully.'
+          );
+        }
+      });
   }
-
-
-  /*
-   * Update member role
-   */
 
   updateRole(
     member: OrgMemberResponse,
@@ -152,26 +133,42 @@ export class OrgMembersComponent implements OnInit {
       return;
     }
 
+    const organization =
+      this.currentOrganization();
+
+    if (!organization) {
+      return;
+    }
+
     this.memberService
       .updateMember(
-        this.organizationId,
+        organization.id,
         {
           role
         },
         member.userId
       )
-      .pipe(
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe();
+      .subscribe(
+        {
+          next: () => {
+            this.notification.success(
+              'Member role updated successfully.'
+            );
+          }
+        }
+      );
   }
 
+  deleteMember(
+    member: OrgMemberResponse
+  ): void {
 
-  /*
-   * Delete member
-   */
+    const organization =
+      this.currentOrganization();
 
-  deleteMember(member: OrgMemberResponse): void {
+    if (!organization) {
+      return;
+    }
 
     const dialogRef = this.dialog.open(
       UiConfirmDialogComponent,
@@ -189,42 +186,50 @@ export class OrgMembersComponent implements OnInit {
 
     dialogRef.afterClosed()
       .pipe(
-        filter(confirmed => confirmed === true),
+        filter(
+          confirmed => confirmed === true
+        ),
         switchMap(() =>
           this.memberService.deleteMember(
-            this.organizationId,
+            organization.id,
             member.userId
           )
-        ),
-        takeUntilDestroyed(this.destroyRef)
+        )
       )
-      .subscribe();
+      .subscribe({
+        next: () => {
+          this.notification.success(
+            'Member removed successfully.'
+          );
+        }
+      });
   }
 
-
-  /*
-   * Helpers
-   */
-
-  getInitials(member: OrgMemberResponse): string {
+  getInitials(
+    member: OrgMemberResponse
+  ): string {
 
     return member.fullName
       .split(' ')
       .filter(Boolean)
       .slice(0, 2)
-      .map(name => name.charAt(0).toUpperCase())
+      .map(name =>
+        name.charAt(0).toUpperCase()
+      )
       .join('');
   }
 
-
-  formatRole(role: OrganizationRoleMember): string {
+  formatRole(
+    role: OrganizationRoleMember
+  ): string {
 
     return role.charAt(0) +
       role.slice(1).toLowerCase();
   }
 
-
-  formatJoinedDate(date: string): string {
+  formatJoinedDate(
+    date: string
+  ): string {
 
     return new Date(date).toLocaleDateString(
       'en-US',

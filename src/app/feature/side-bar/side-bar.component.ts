@@ -2,7 +2,8 @@ import {
   Component,
   signal,
   inject,
-  computed
+  computed,
+  DestroyRef
 } from '@angular/core';
 
 import {
@@ -23,6 +24,9 @@ import { OrganizationResponse } from '../../core/models/organization/organizatio
 
 import { ProjectDialogComponent } from '../project/project-dialog/project-dialog.component';
 import { OrganizationalContextService } from '../../core/services/organizational-context.service';
+import { ProjectService } from '../../core/services/project.service';
+import { ProjectResponse } from '../../core/models/project/project-response';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -34,22 +38,28 @@ import { OrganizationalContextService } from '../../core/services/organizational
     MatTooltipModule
   ],
   templateUrl: './side-bar.component.html',
-  styleUrl: './side-bar.component.css'
+  styleUrls: ['./side-bar.component.css']
 })
 export class SideBarComponent{
 
   readonly isCollapsed = signal(false);
+  readonly isMobileOpen = signal(false);
   readonly isOrganizationMenuOpen = signal(false);
+
+  private readonly destroyRef = inject(DestroyRef);
 
   private readonly dialog = inject(MatDialog);
   private readonly router = inject(Router);
   private readonly organizationContext =inject(OrganizationalContextService);
+  private readonly projectService =inject(ProjectService);
 
   readonly organizations =
     this.organizationContext.organizations;
 
   readonly projects =
     this.organizationContext.projects;
+
+  private readonly notification = inject(NotificationService);
 
   readonly currentOrganization = this.organizationContext.currentOrganization;
 
@@ -86,11 +96,13 @@ export class SideBarComponent{
   selectOrganization(
     organization: OrganizationResponse
   ): void {
-    this.organizationContext.selectOrganization(organization);
     this.isOrganizationMenuOpen.set(false);
 
+    this.closeMobile();
     this.router.navigate([
-      '/'
+      '/organizations',
+      organization.id,
+      'projects'
     ]);
   }
 
@@ -118,29 +130,60 @@ export class SideBarComponent{
       .pipe(
         filter(result => !!result),
         switchMap(result =>
-          this.organizationContext.createProject(
+          this.projectService.addProject(
             organization.id,
             result
           )
-        )
+        ),
+        takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe({
-        error: error => {
-          console.error(
-            'Failed to create project',
-            error
-          );
+      .subscribe(
+        {
+          next: () => {
+            this.notification.success(
+              'Project created successfully.'
+            );
+          }
         }
-      });
+      );
   }
 
 
   manageOrganizations(): void {
 
     this.isOrganizationMenuOpen.set(false);
+    this.closeMobile();
 
     this.router.navigate([
       '/organizations'
     ]);
   }
+
+  toggleMobile(): void {
+    this.isMobileOpen.update(open => !open);
+  }
+
+  closeMobile(): void {
+    this.isMobileOpen.set(false);
+  }
+
+  private readonly PROJECT_COLORS = [
+    '#6366F1', // Indigo
+    '#8B5CF6', // Violet
+    '#EC4899', // Pink
+    '#EF4444', // Red
+    '#F97316', // Orange
+    '#F59E0B', // Amber
+    '#10B981', // Emerald
+    '#14B8A6', // Teal
+    '#06B6D4', // Cyan
+    '#3B82F6'  // Blue
+  ];
+
+  getProjectColor(project: ProjectResponse): string {
+    return this.PROJECT_COLORS[
+      project.id % this.PROJECT_COLORS.length
+    ];
+  }
+
 }

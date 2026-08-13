@@ -1,27 +1,33 @@
 :host {
   display: block;
+  width: 100%;
+  min-width: 0;
 }
 
-
-/* =========================================
+/* =========================================================
    PAGE
-   ========================================= */
+   ========================================================= */
 
 .members-page {
-  padding: 2rem 2.5rem;
+  width: 100%;
   max-width: 1500px;
   margin: 0 auto;
+  padding: 2rem 2.5rem;
+
+  box-sizing: border-box;
+  min-width: 0;
 }
 
-
-/* =========================================
+/* =========================================================
    HEADER
-   ========================================= */
+   ========================================================= */
 
-.page-header {
+.members-page__header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+
+  gap: 2rem;
 
   padding-bottom: 2rem;
 
@@ -31,68 +37,82 @@
       var(--color-text-secondary) 12%,
       transparent
     );
+
+  min-width: 0;
 }
 
-
-.page-header__content {
+.members-page__header__content {
   display: flex;
   flex-direction: column;
+
+  min-width: 0;
 }
 
-
-.page-header h1 {
+.members-page__header h1 {
   margin: 0.7rem 0 0.3rem;
 
   color: var(--color-text);
 
   font-size: 2rem;
+  line-height: 1.2;
   font-weight: 700;
 
   letter-spacing: -0.03em;
 }
 
-
-.page-header p {
+.members-page__header p {
   margin: 0;
 
   color: var(--color-text-secondary);
 
   font-size: 1rem;
+  line-height: 1.5;
 }
 
+/* Keep the custom button from shrinking strangely */
+.members-page__header app-ui-button {
+  flex-shrink: 0;
+}
 
-/* =========================================
+/* =========================================================
    BREADCRUMBS
-   ========================================= */
+   ========================================================= */
 
 .breadcrumbs {
   display: flex;
   align-items: center;
+
   gap: 0.35rem;
 
   color: var(--color-text-secondary);
 
   font-size: 0.9rem;
+  line-height: 1.25;
+
+  min-width: 0;
 }
 
+.breadcrumbs span {
+  white-space: nowrap;
+}
 
 .breadcrumbs span:last-child {
   color: var(--color-text);
   font-weight: 600;
 }
 
-
 .breadcrumbs mat-icon {
-  width: 18px;
-  height: 18px;
+  width: 1.125rem;
+  height: 1.125rem;
 
-  font-size: 18px;
+  font-size: 1.125rem;
+
+  flex-shrink: 0;
 }
 
-
-/* =========================================
+/* =========================================================
    ROLE SUMMARY
-   ========================================= */
+   ========================================================= */
 
 .role-summary {
   display: flex;
@@ -101,9 +121,14 @@
   gap: 0.75rem;
 
   padding: 1.5rem 0;
+
+  min-width: 0;
 }
 
-
+/*
+ * Each role badge keeps its own size.
+ * On mobile the whole group can scroll horizontally.
+ */
 .role-badge {
   display: inline-flex;
   align-items: center;
@@ -112,25 +137,29 @@
 
   padding: 0.55rem 0.8rem;
 
-  border-radius: 10px;
+  border-radius: 0.625rem;
 
   font-size: 0.85rem;
+  line-height: 1.2;
   font-weight: 600;
-}
 
+  white-space: nowrap;
+
+  flex: 0 0 auto;
+}
 
 .role-badge mat-icon {
-  width: 17px;
-  height: 17px;
+  width: 1.0625rem;
+  height: 1.0625rem;
 
-  font-size: 17px;
+  font-size: 1.0625rem;
+
+  flex-shrink: 0;
 }
-
 
 .role-badge strong {
   margin-left: 0.2rem;
 }
-
 
 .role-badge--owner {
   background: color-mix(
@@ -142,7 +171,6 @@
   color: #f59e0b;
 }
 
-
 .role-badge--admin {
   background: color-mix(
     in srgb,
@@ -152,7 +180,6 @@
 
   color: var(--color-primary);
 }
-
 
 .role-badge--member {
   background: color-mix(
@@ -164,12 +191,13 @@
   color: #3b82f6;
 }
 
-
-/* =========================================
-   TABLE
-   ========================================= */
+/* =========================================================
+   MEMBERS CARD
+   ========================================================= */
 
 .members-card {
+  width: 100%;
+
   overflow: hidden;
 
   border: 1px solid
@@ -184,13 +212,18 @@
   background: var(--color-surface);
 
   box-shadow: var(--shadow-sm);
-}
 
+  box-sizing: border-box;
+}
 
 .members-table {
   width: 100%;
+  min-width: 0;
 }
 
+/* =========================================================
+   DESKTOP TABLE
+   ========================================================= */
 
 .members-table__header,
 .member-row {
@@ -201,11 +234,12 @@
     minmax(220px, 1.5fr)
     minmax(150px, 0.8fr)
     minmax(120px, 0.6fr)
-    60px;
+    3.75rem;
 
   align-items: center;
-}
 
+  min-width: 0;
+}
 
 .members-table__header {
   padding: 1rem 1.25rem;
@@ -220,15 +254,15 @@
   color: var(--color-text-secondary);
 
   font-size: 0.72rem;
+  line-height: 1.2;
   font-weight: 700;
 
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
-
 .member-row {
-  min-height: 76px;
+  min-height: 4.75rem;
 
   padding: 0 1.25rem;
 
@@ -240,13 +274,13 @@
     );
 
   transition: background 0.15s ease;
-}
 
+  box-sizing: border-box;
+}
 
 .member-row:last-child {
   border-bottom: none;
 }
-
 
 .member-row:hover {
   background: color-mix(
@@ -256,10 +290,9 @@
   );
 }
 
-
-/* =========================================
+/* =========================================================
    MEMBER NAME
-   ========================================= */
+   ========================================================= */
 
 .member-name {
   display: flex;
@@ -270,10 +303,9 @@
   min-width: 0;
 }
 
-
 .member-avatar {
-  width: 38px;
-  height: 38px;
+  width: 2.375rem;
+  height: 2.375rem;
 
   display: flex;
   align-items: center;
@@ -291,7 +323,6 @@
   font-weight: 700;
 }
 
-
 .member-name__info {
   display: flex;
   flex-direction: column;
@@ -299,50 +330,51 @@
   min-width: 0;
 }
 
-
 .member-name__full {
   overflow: hidden;
 
   color: var(--color-text);
 
   font-size: 0.95rem;
+  line-height: 1.4;
   font-weight: 600;
 
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-
 .mobile-only {
   display: none;
 }
 
-
-/* =========================================
+/* =========================================================
    EMAIL
-   ========================================= */
+   ========================================================= */
 
 .member-email {
+  min-width: 0;
+
   overflow: hidden;
 
   color: var(--color-text-secondary);
 
   font-size: 0.9rem;
+  line-height: 1.4;
 
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-
-/* =========================================
+/* =========================================================
    ROLE
-   ========================================= */
+   ========================================================= */
 
 .member-role {
   display: flex;
   align-items: center;
-}
 
+  min-width: 0;
+}
 
 .role-pill {
   display: inline-flex;
@@ -350,26 +382,28 @@
 
   gap: 0.4rem;
 
-  min-height: 36px;
+  min-height: 2.25rem;
 
   padding: 0.4rem 0.7rem;
 
   border: none;
-
-  border-radius: 9px;
+  border-radius: 0.5625rem;
 
   font-size: 0.8rem;
+  line-height: 1.2;
   font-weight: 600;
-}
 
+  white-space: nowrap;
+}
 
 .role-pill mat-icon {
-  width: 16px;
-  height: 16px;
+  width: 1rem;
+  height: 1rem;
 
-  font-size: 16px;
+  font-size: 1rem;
+
+  flex-shrink: 0;
 }
-
 
 .role-pill--owner {
   background: color-mix(
@@ -380,7 +414,6 @@
 
   color: #f59e0b;
 }
-
 
 .role-pill--clickable {
   background: color-mix(
@@ -396,7 +429,6 @@
   transition: background 0.15s ease;
 }
 
-
 .role-pill--clickable:hover {
   background: color-mix(
     in srgb,
@@ -405,26 +437,26 @@
   );
 }
 
-
 .role-arrow {
   margin-left: 0.1rem;
 }
 
-
-/* =========================================
+/* =========================================================
    JOINED
-   ========================================= */
+   ========================================================= */
 
 .member-joined {
   color: var(--color-text-secondary);
 
   font-size: 0.85rem;
+  line-height: 1.4;
+
+  white-space: nowrap;
 }
 
-
-/* =========================================
+/* =========================================================
    ACTIONS
-   ========================================= */
+   ========================================================= */
 
 .member-actions {
   display: flex;
@@ -432,14 +464,15 @@
   justify-content: flex-end;
 }
 
-
 .member-action {
-  width: 36px;
-  height: 36px;
+  width: 2.25rem;
+  height: 2.25rem;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  padding: 0;
 
   border: none;
   border-radius: var(--radius-md);
@@ -449,16 +482,16 @@
   color: var(--color-text-secondary);
 
   cursor: pointer;
-}
 
+  flex-shrink: 0;
+}
 
 .member-action mat-icon {
-  width: 19px;
-  height: 19px;
+  width: 1.1875rem;
+  height: 1.1875rem;
 
-  font-size: 19px;
+  font-size: 1.1875rem;
 }
-
 
 .member-action--delete:hover {
   background: color-mix(
@@ -470,10 +503,9 @@
   color: var(--color-error);
 }
 
-
-/* =========================================
+/* =========================================================
    EMPTY STATE
-   ========================================= */
+   ========================================================= */
 
 .empty-state {
   display: flex;
@@ -481,119 +513,397 @@
   align-items: center;
   justify-content: center;
 
-  padding: 5rem 2rem;
+  padding: 4rem 2rem;
 
   text-align: center;
 }
 
-
 .empty-state > mat-icon {
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
 
   margin-bottom: 1rem;
 
-  font-size: 48px;
+  font-size: 3rem;
 
   color: var(--color-text-secondary);
 }
-
 
 .empty-state h2 {
   margin: 0 0 0.5rem;
 
   color: var(--color-text);
 
-  font-size: 1.2rem;
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
-
 .empty-state p {
+  max-width: 28rem;
+
   margin: 0 0 1.5rem;
 
   color: var(--color-text-secondary);
+
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
+/* =========================================================
+   TABLET
+   ========================================================= */
 
-/* =========================================
-   RESPONSIVE
-   ========================================= */
-
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
 
   .members-page {
     padding: 1.5rem;
   }
 
+  .members-page__header {
+    gap: 1.5rem;
+  }
 
   .members-table__header,
   .member-row {
     grid-template-columns:
-      minmax(180px, 1.5fr)
-      minmax(180px, 1fr)
+      minmax(170px, 1.3fr)
+      minmax(180px, 1.4fr)
       minmax(130px, 0.8fr)
-      50px;
+      minmax(100px, 0.6fr)
+      3.5rem;
   }
 
+  .members-table__header,
+  .member-row {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
 
-  .members-table__header > div:nth-child(4),
-  .member-joined {
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .members-page {
+    width: 100%;
+
+    padding: 1.25rem;
+
+    overflow-x: hidden;
+  }
+
+  /* -------------------------
+     HEADER
+     ------------------------- */
+
+  .members-page__header {
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 1.25rem;
+
+    padding-bottom: 1.25rem;
+  }
+
+  .members-page__header h1 {
+    margin-top: 0.6rem;
+
+    font-size: 1.75rem;
+  }
+
+  .members-page__header p {
+    font-size: 0.95rem;
+
+    max-width: 20rem;
+  }
+
+  .members-page__header app-ui-button {
+    width: 100%;
+  }
+
+  /* -------------------------
+     BREADCRUMBS
+     ------------------------- */
+
+  .breadcrumbs {
+    gap: 0.25rem;
+
+    font-size: 0.8rem;
+  }
+
+  .breadcrumbs mat-icon {
+    width: 1rem;
+    height: 1rem;
+
+    font-size: 1rem;
+  }
+
+  /* -------------------------
+     ROLE SUMMARY
+     ------------------------- */
+
+  .role-summary {
+    width: 100%;
+
+    padding: 1.25rem 0;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scrollbar-width: none;
+
+    /* Prevent badges from wrapping */
+    flex-wrap: nowrap;
+  }
+
+  .role-summary::-webkit-scrollbar {
     display: none;
   }
 
-}
+  .role-badge {
+    flex: 0 0 auto;
 
+    padding: 0.6rem 0.8rem;
 
-@media (max-width: 700px) {
-
-  .page-header {
-    align-items: flex-start;
-
-    flex-direction: column;
-
-    gap: 1.25rem;
+    font-size: 0.8rem;
   }
 
+  /* -------------------------
+     MEMBER CARD
+     ------------------------- */
 
-  .role-summary {
-    flex-wrap: wrap;
+  .members-card {
+    border-radius: var(--radius-lg);
+
+    overflow: hidden;
   }
 
-
+  /*
+   * Remove the desktop table header completely.
+   */
   .members-table__header {
     display: none;
   }
 
-
+  /*
+   * Every member becomes its own
+   * compact mobile layout.
+   */
   .member-row {
     display: grid;
 
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto;
 
-    gap: 0.75rem;
+    grid-template-rows:
+      auto
+      auto
+      auto
+      auto;
+
+    column-gap: 0.75rem;
+    row-gap: 0.65rem;
+
+    min-height: auto;
 
     padding: 1rem;
+
+    box-sizing: border-box;
   }
 
+  /*
+   * Name
+   */
+  .member-name {
+    grid-column: 1;
+    grid-row: 1;
 
+    min-width: 0;
+  }
+
+  .member-avatar {
+    width: 2.75rem;
+    height: 2.75rem;
+
+    font-size: 0.85rem;
+  }
+
+  .member-name__full {
+    font-size: 0.95rem;
+  }
+
+  /*
+   * On mobile we show the email
+   * directly underneath the name.
+   */
+  .mobile-only {
+    display: block;
+
+    margin-top: 0.15rem;
+
+    max-width: 100%;
+
+    overflow: hidden;
+
+    color: var(--color-text-secondary);
+
+    font-size: 0.8rem;
+    line-height: 1.35;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /*
+   * Hide the desktop email column.
+   *
+   * Otherwise the email appears twice.
+   */
   .member-email {
     display: none;
   }
 
-
-  .mobile-only {
-    display: block;
-  }
-
-
+  /*
+   * Role
+   */
   .member-role {
     grid-column: 1;
+    grid-row: 2;
+
+    min-width: 0;
   }
 
+  .role-pill {
+    min-height: 2.125rem;
 
+    padding: 0.4rem 0.65rem;
+
+    font-size: 0.78rem;
+  }
+
+  /*
+   * Joined date
+   */
+  .member-joined {
+    grid-column: 1;
+    grid-row: 3;
+
+    font-size: 0.8rem;
+  }
+
+  /*
+   * Delete button
+   *
+   * Keep it at the top-right rather than
+   * stretching it across multiple rows.
+   */
   .member-actions {
     grid-column: 2;
-    grid-row: 1 / span 2;
+    grid-row: 1;
+
+    align-self: start;
+    justify-self: end;
   }
 
+  .member-action {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  /*
+   * Don't apply desktop hover behavior
+   * to the whole member row on touch screens.
+   */
+  .member-row:hover {
+    background: transparent;
+  }
+
+  /* -------------------------
+     EMPTY STATE
+     ------------------------- */
+
+  .empty-state {
+    padding: 3rem 1.25rem;
+  }
+
+  .empty-state p {
+    font-size: 0.9rem;
+  }
+}
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .members-page {
+    padding: 1rem;
+  }
+
+  .members-page__header {
+    gap: 1rem;
+
+    padding-bottom: 1rem;
+  }
+
+  .members-page__header h1 {
+    font-size: 1.6rem;
+  }
+
+  .members-page__header p {
+    font-size: 0.9rem;
+  }
+
+  .role-summary {
+    padding: 1rem 0;
+
+    gap: 0.5rem;
+  }
+
+  .role-badge {
+    padding: 0.55rem 0.7rem;
+
+    font-size: 0.75rem;
+  }
+
+  .role-badge mat-icon {
+    width: 1rem;
+    height: 1rem;
+
+    font-size: 1rem;
+  }
+
+  .member-row {
+    padding: 0.9rem;
+
+    column-gap: 0.5rem;
+    row-gap: 0.6rem;
+  }
+
+  .member-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .member-name {
+    gap: 0.65rem;
+  }
+
+  .member-name__full {
+    font-size: 0.9rem;
+  }
+
+  .mobile-only {
+    font-size: 0.75rem;
+  }
+
+  .role-pill {
+    font-size: 0.75rem;
+  }
+
+  .member-joined {
+    font-size: 0.75rem;
+  }
 }

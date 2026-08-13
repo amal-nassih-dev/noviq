@@ -4,7 +4,6 @@ import { UiInputComponent } from '../../../shared/component/ui-input/ui-input.co
 import { UiButtonComponent } from '../../../shared/component/ui-button/ui-button/ui-button.component';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
-import { OrganizationService } from '../../../core/services/organization.service';
 import { OrganizationResponse } from '../../../core/models/organization/organization-response';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 

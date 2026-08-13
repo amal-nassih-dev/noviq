@@ -1,23 +1,89 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import {
+  HttpInterceptorFn,
+  HttpErrorResponse
+} from '@angular/common/http';
+
 import { inject } from '@angular/core';
-import { AuthStateService } from '../services/auth-state.service';
 
-export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const authStateService = inject(AuthStateService);
-  const token = authStateService.getToken();
-  if (req.url.includes('/auth')) { // because those are public 
-    return next(req);
-}
+import { Router } from '@angular/router';
 
-  if(!token) {
-    return next(req);
-  }
+import {
+  catchError,
+  throwError
+} from 'rxjs';
 
-  const authenticationRequest = req.clone({ // HttpRequest objects are immutable so if we set the headers directly on req it will not work
-    setHeaders : {
-      Authorization : `Bearer ${token}`
+import { AuthenticationService }
+  from '../services/authentication.service';
+
+
+export const authInterceptor: HttpInterceptorFn =
+  (req, next) => {
+
+    const authenticationService =
+      inject(AuthenticationService);
+
+    const router =
+      inject(Router);
+
+
+    const token =
+      authenticationService.getToken();
+
+
+    /*
+     * Authentication endpoints should never receive
+     * the existing JWT.
+     */
+    const isAuthRequest =
+      req.url.includes('/api/auth/');
+
+
+    let request = req;
+
+
+    /*
+     * Attach JWT only to protected requests.
+     */
+    if (token && !isAuthRequest) {
+
+      request = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        }
+      });
     }
-  })
 
-  return next(authenticationRequest);
-};
+
+    return next(request).pipe(
+
+      catchError(
+        (error: HttpErrorResponse) => {
+
+          /*
+           * A 401 on a request where we actually sent
+           * a JWT means that the JWT is no longer valid.
+           *
+           * Examples:
+           * - expired token
+           * - malformed token
+           * - invalid signature
+           */
+          if (
+            error.status === 401 &&
+            token &&
+            !isAuthRequest
+          ) {
+
+            authenticationService.logout();
+
+            router.navigate(['/login']);
+          }
+
+
+          return throwError(
+            () => error
+          );
+        }
+      )
+    );
+  };

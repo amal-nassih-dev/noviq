@@ -1,39 +1,41 @@
-<h2 mat-dialog-title>
-    {{ isEditMode() ? 'Edit Project' : 'New Project' }}
-</h2>
+<div class="app-dialog">
+    <h2 mat-dialog-title>
+        {{ isEditMode() ? 'Edit Project' : 'New Project' }}
+    </h2>
 
-<mat-dialog-content>
+    <mat-dialog-content>
 
-    <form [formGroup]="form">
-        <app-ui-input
-            formControlName="name"
-            label="Name"
-            placeholder="Project name">
-        </app-ui-input>
+        <form [formGroup]="form">
+            <app-ui-input
+                formControlName="name"
+                label="Name"
+                placeholder="Project name">
+            </app-ui-input>
 
-        <app-ui-input
-            formControlName="description"
-            label="Description"
-            placeholder="Optional description">
-        </app-ui-input>
-    </form>
+            <app-ui-input
+                formControlName="description"
+                label="Description"
+                placeholder="Optional description">
+            </app-ui-input>
+        </form>
 
-</mat-dialog-content>
+    </mat-dialog-content>
 
-<mat-dialog-actions align="end">
+    <mat-dialog-actions align="end">
 
-    <button
-        mat-button
-        (click)="close()">
+        <button
+            mat-button
+            (click)="close()">
 
-        Cancel
+            Cancel
 
-    </button>
+        </button>
 
-    <app-ui-button
-        [label]="isEditMode() ? 'Save' : 'Create'"
-        [disabled]="form.invalid"
-        (click)="save()">
-    </app-ui-button>
+        <app-ui-button
+            [label]="isEditMode() ? 'Save' : 'Create'"
+            [disabled]="form.invalid"
+            (click)="save()">
+        </app-ui-button>
 
-</mat-dialog-actions>
+    </mat-dialog-actions>
+</div>

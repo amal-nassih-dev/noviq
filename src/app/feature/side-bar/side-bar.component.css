@@ -3,7 +3,7 @@
    ========================================= */
 
 .sidebar {
-  width: 250px;
+   width: var(--sidebar-width);
   height: 100%;
 
   display: flex;
@@ -36,8 +36,8 @@
    ========================================= */
 
 .sidebar.collapsed {
-  width: 72px;
-  padding: 1rem 0.6rem;
+  width: 4.5rem;
+  padding: var(--spacing-lg) var(--spacing-sm);
 }
 
 
@@ -86,7 +86,7 @@
 
   padding: 0.25rem 0.45rem;
 
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 
   background: var(--color-background-secondary);
 
@@ -594,8 +594,6 @@
   flex-shrink: 0;
 
   border-radius: 50%;
-
-  background: var(--color-primary);
 }
 
 
@@ -924,59 +922,138 @@
 
 }
 
+/* =========================================================
+   MOBILE SIDEBAR
+   ========================================================= */
 
-@media (max-width: 600px) {
+.sidebar__mobile-close {
+  display: none;
+}
+
+@media (max-width: 768px) {
 
   .sidebar {
-    width: 64px;
-    padding: 1rem 0.6rem;
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    z-index: 2000;
+
+    width: min(18rem, 85vw);
+
+    padding: var(--spacing-lg);
+
+    transform: translateX(-100%);
+
+    box-shadow: var(--shadow-lg);
+
+    transition:
+      transform var(--transition-normal);
   }
 
-  .sidebar__title,
-  .sidebar__beta,
-  .organization-name,
-  .organization-switcher__button mat-icon,
-  .sidebar .label,
-  .nav-section-title,
-  .project-name,
-  .project-count,
-  .see-all-projects {
-    display: none;
+  .sidebar.mobile-open {
+    transform: translateX(0);
   }
 
-  .sidebar__brand {
+  /*
+   * Don't use the desktop collapsed state
+   * on mobile.
+   */
+  .sidebar.collapsed {
+    width: min(18rem, 85vw);
+
+    padding: var(--spacing-lg);
+
+    transform: translateX(-100%);
+  }
+
+  .sidebar.collapsed.mobile-open {
+    transform: translateX(0);
+  }
+
+  /*
+   * Restore all labels when mobile menu is open.
+   */
+  .sidebar.collapsed .sidebar__title,
+  .sidebar.collapsed .sidebar__beta,
+  .sidebar.collapsed .organization-name,
+  .sidebar.collapsed .organization-switcher__button mat-icon,
+  .sidebar.collapsed .label,
+  .sidebar.collapsed .nav-section-title,
+  .sidebar.collapsed .project-name,
+  .sidebar.collapsed .project-count,
+  .sidebar.collapsed .see-all-projects {
+    display: initial;
+  }
+
+  .sidebar.collapsed .sidebar__brand {
+    justify-content: flex-start;
+  }
+
+  .sidebar.collapsed .organization-switcher__button {
+    justify-content: flex-start;
+  }
+
+  .sidebar.collapsed .nav-item {
+    justify-content: flex-start;
+
+    gap: var(--spacing-md);
+
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+
+  .sidebar.collapsed .project-item {
+    justify-content: flex-start;
+
+    gap: var(--spacing-md);
+
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+
+  .sidebar.collapsed .add-project {
+    justify-content: flex-start;
+
+    gap: var(--spacing-md);
+
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+
+  /*
+   * Mobile close button
+   */
+  .sidebar__mobile-close {
+    position: absolute;
+
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+
+    width: 2.25rem;
+    height: 2.25rem;
+
+    display: flex;
+    align-items: center;
     justify-content: center;
-    padding-left: 0;
-    padding-right: 0;
+
+    padding: 0;
+
+    border: none;
+    border-radius: var(--radius-md);
+
+    background: var(--color-background-secondary);
+
+    color: var(--color-text-secondary);
+
+    cursor: pointer;
   }
 
-  .organization-switcher__button {
-    justify-content: center;
-    padding: 0.55rem;
-  }
+  .sidebar__mobile-close:hover {
+    color: var(--color-text);
 
-  .nav-item {
-    justify-content: center;
-    gap: 0;
-    padding-left: 0;
-    padding-right: 0;
+    background: var(--color-border);
   }
-
-  .project-item {
-    justify-content: center;
-    gap: 0;
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .add-project {
-    justify-content: center;
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .sidebar__toggle {
-    justify-content: center;
-  }
-
 }

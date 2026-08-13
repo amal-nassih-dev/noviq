@@ -1,19 +1,9 @@
-/* organization-member-dialog.component.css */
-
 :host {
   display: block;
 }
 
 .full-width {
   width: 100%;
-}
-
-/* Better spacing inside the dialog content */
-mat-dialog-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  padding-top: 0.5rem !important;
 }
 
 /* Search field */
@@ -27,12 +17,6 @@ mat-form-field.full-width {
   flex-direction: column;
   gap: 0.15rem;
   padding: 0.15rem 0;
-}
-
-.user-option__name {
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--color-text);
 }
 
 .user-option__email {
@@ -96,13 +80,13 @@ mat-form-field.full-width {
 
 .clear-user {
   margin-left: auto;
-  width: 32px;
-  height: 32px;
+  width: var(--space-8);
+  height: var(--space-8);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--space-2);
   background: transparent;
   color: var(--color-text-secondary);
-  font-size: 1.35rem;
+  font-size: var(--space-5);
   line-height: 1;
   display: flex;
   align-items: center;
@@ -119,24 +103,4 @@ mat-form-field.full-width {
 /* Role select */
 mat-form-field {
   width: 100%;
-}
-
-/* Dialog actions */
-
-.dialog-actions {
-  padding: 0.75rem 1.5rem 1.25rem !important;
-  gap: 0.75rem;
-}
-
-mat-dialog-actions button[mat-button] {
-  color: var(--color-text-secondary);
-  font-weight: 500;
-  border-radius: var(--radius-md);
-  padding: 0.5rem 1rem;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-mat-dialog-actions button[mat-button]:hover {
-  background: var(--color-background-secondary);
-  color: var(--color-text);
 }

@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { AuthenticationResponse } from '../models/auth/authentication-response';
+
 import { UserResponse } from '../models/auth/user-response';
 
 @Injectable({
@@ -7,79 +7,71 @@ import { UserResponse } from '../models/auth/user-response';
 })
 export class AuthStateService {
 
-  private static readonly TOKEN_KEY = 'token';
-  private static readonly USER_KEY = 'user';
+  private readonly TOKEN_KEY = 'token';
+  private readonly USER_KEY = 'user';
 
-  private readonly _user = signal<UserResponse | null>(null);
-  readonly user = this._user.asReadonly();
+  readonly user =
+    signal<UserResponse | null>(
+      this.loadUser()
+    );
 
-  private readonly _token = signal<string | null>(null);
-  readonly token = this._token.asReadonly();
 
-  constructor() {
-    this.restore();
+  getToken(): string | null {
+    return localStorage.getItem(this.TOKEN_KEY);
   }
 
-  /**
-   * Restores the authentication state from localStorage.
-   * Called automatically when the service is created.
-   */
-  private restore(): void {
 
-    const token = localStorage.getItem(AuthStateService.TOKEN_KEY);
-    const user = localStorage.getItem(AuthStateService.USER_KEY);
-
-    if (token) {
-      this._token.set(token);
-    }
-
-    if (user) {
-      this._user.set(JSON.parse(user));
-    }
+  isLoggedIn(): boolean {
+    return !!this.getToken();
   }
 
-  /**
-   * Stores the authenticated user and token.
-   */
-  login(response: AuthenticationResponse): void {
+
+  setAuthentication(
+    token: string,
+    user: UserResponse
+  ): void {
 
     localStorage.setItem(
-      AuthStateService.TOKEN_KEY,
-      response.token
+      this.TOKEN_KEY,
+      token
     );
 
     localStorage.setItem(
-      AuthStateService.USER_KEY,
-      JSON.stringify(response.user)
+      this.USER_KEY,
+      JSON.stringify(user)
     );
 
-    this._token.set(response.token);
-    this._user.set(response.user);
+    this.user.set(user);
   }
 
-  /**
-   * Clears the authentication state.
-   */
+
   logout(): void {
 
-    localStorage.removeItem(AuthStateService.TOKEN_KEY);
-    localStorage.removeItem(AuthStateService.USER_KEY);
+    localStorage.removeItem(
+      this.TOKEN_KEY
+    );
 
-    this._token.set(null);
-    this._user.set(null);
+    localStorage.removeItem(
+      this.USER_KEY
+    );
+
+    this.user.set(null);
   }
 
-  /**
-   * Returns whether the user is authenticated.
-   */
-  isLoggedIn(): boolean {
-    return this.token() !== null;
-  }
 
-  /**
-   * Returns the current JWT.
-   */
-  getToken(): string | null {
-    return this.token();
+  private loadUser(): UserResponse | null {
+
+    const user =
+      localStorage.getItem(this.USER_KEY);
+
+    if (!user) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(user);
+    } catch {
+      return null;
+    }
   }
 }

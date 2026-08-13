@@ -19,7 +19,7 @@
 }
 
 .login-card {
-  width: 430px;
+  width: min(430px, 100%);
 
   padding: var(--spacing-2xl);
 
@@ -77,4 +77,16 @@ h1 {
 .error {
   color: #d32f2f;
   font-size: .9rem;
+}
+
+
+@media (max-width: 480px) {
+  .login-page {
+    padding: var(--spacing-md);
+  }
+
+  .login-card {
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+  }
 }

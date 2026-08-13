@@ -2,6 +2,7 @@ import { Component, inject, computed } from '@angular/core';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { Router, RouterLink } from '@angular/router';
 import { OrganizationalContextService } from '../../../core/services/organizational-context.service';
+import { ProjectResponse } from '../../../core/models/project/project-response';
 
 @Component({
   selector: 'app-dashboard',
@@ -86,5 +87,24 @@ export class DashboardComponent {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
   }
+
+  private readonly PROJECT_COLORS = [
+      '#6366F1', // Indigo
+      '#8B5CF6', // Violet
+      '#EC4899', // Pink
+      '#EF4444', // Red
+      '#F97316', // Orange
+      '#F59E0B', // Amber
+      '#10B981', // Emerald
+      '#14B8A6', // Teal
+      '#06B6D4', // Cyan
+      '#3B82F6'  // Blue
+    ];
+  
+    getProjectColor(project: ProjectResponse): string {
+      return this.PROJECT_COLORS[
+        project.id % this.PROJECT_COLORS.length
+      ];
+    }
 
 }

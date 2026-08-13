@@ -1,30 +1,34 @@
 .org-card {
   display: flex;
   flex-direction: column;
-  gap: 1.15rem;                 /* more breathing room */
+  gap: var(--spacing-lg);
   height: 100%;
-  padding: 1.25rem 1.3rem;      /* if the card itself has no padding */
+  padding: var(--spacing-lg);
 }
 
 /* Header */
 .org-card__header {
   display: flex;
   align-items: flex-start;
-  gap: 0.95rem;
-  margin-bottom: 0.85rem;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
 }
 
 .org-card__avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-md);
+
   background: var(--color-primary);
   color: white;
-  font-weight: 700;
-  font-size: 0.9rem;
+
+  font-weight: var(--weight-bold);
+  font-size: var(--font-md);
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   flex-shrink: 0;
   text-transform: uppercase;
 }
@@ -36,9 +40,9 @@
 }
 
 .org-card__name {
-  margin: 0 0 0.25rem;
-  font-size: 1.1rem;
-  font-weight: 600;
+  margin: 0 0 var(--spacing-xs);
+  font-size: var(--font-lg);
+  font-weight: var(--weight-semibold);
   color: var(--color-text);
   line-height: 1.3;
 }
@@ -56,37 +60,13 @@
   flex-shrink: 0;
 }
 
-.icon-btn {
-  width: 34px;
-  height: 34px;
-  border: none;
-  border-radius: 9px;
-  background: transparent;
-  color: var(--color-text-secondary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-
-.icon-btn:hover {
-  background: var(--color-background-secondary);
-  color: var(--color-text);
-}
-
-.icon-btn mat-icon {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
-}
-
 /* Description */
 .org-card__description {
-  margin: 0 0 1.15rem;
-  font-size: 0.9rem;
+  margin: 0 0 var(--spacing-lg);
+  font-size: var(--font-sm);
   color: var(--color-text-secondary);
   line-height: 1.5;
+
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -97,62 +77,12 @@
 .org-card__stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.65rem;
-  margin-top: auto;  
+  gap: var(--spacing-sm);
+  margin-top: auto;
 }
 
-.stat {
-  background: var(--color-background);
-  border-radius: 11px;
-  padding: 0.8rem 0.5rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  border: 1px solid color-mix(in srgb, var(--color-border) 45%, transparent);
-}
-
-.stat strong {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--color-text);
-}
-
-.stat span {
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-/* Optional – makes the menu feel more polished */
-.org-card-menu {
-  min-width: 180px;
-}
-
-.org-card-menu .mat-mdc-menu-item {
-  min-height: 42px;
-  font-size: 0.9rem;
-}
-
-.org-card-menu .mat-mdc-menu-item mat-icon {
-  margin-right: 12px;
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
-  color: var(--color-text-secondary);
-}
-
-.org-card-menu .mat-mdc-menu-item.danger {
-  color: var(--color-error);
-}
-
-.org-card-menu .mat-mdc-menu-item.danger mat-icon {
-  color: var(--color-error);
-}
 
 /* Divider spacing */
 .org-card-menu .mat-divider {
-  margin: 6px 0;
+  margin: var(--radius-sm) 0;
 }

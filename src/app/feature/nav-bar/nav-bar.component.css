@@ -3,258 +3,205 @@
 }
 
 .navbar {
-  height: 64px;
+  height: var(--navbar-height);
+
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+
   padding: 0 var(--spacing-xl);
+
   background: var(--color-surface);
-  border-bottom: 1px solid color-mix(in srgb, var(--color-text-secondary) 14%, transparent);
+
+  border-bottom: 1px solid var(--color-border);
+
   flex-shrink: 0;
+
+  box-sizing: border-box;
 }
 
-.navbar__left {
-  display: flex;
+
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
+
+.mobile-menu-button {
+  display: none;
+
+  width: 2.5rem;
+  height: 2.5rem;
+
   align-items: center;
-  gap: 0.75rem;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: var(--radius-md);
+
+  background: transparent;
+
+  color: var(--color-text);
+
+  cursor: pointer;
 }
+
+.mobile-menu-button:hover {
+  background: var(--color-background-secondary);
+}
+
+.mobile-menu-button mat-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+
+  font-size: 1.5rem;
+}
+
+
+/* =========================================================
+   RIGHT
+   ========================================================= */
 
 .navbar__right {
   display: flex;
   align-items: center;
-  margin-left: auto;   /* keeps user always on the right */
+
+  margin-left: auto;
 }
 
-/* ===== User button ===== */
+
+/* =========================================================
+   USER BUTTON
+   ========================================================= */
+
 .user-button {
   display: inline-flex !important;
   align-items: center;
-  gap: 0.4rem;
-  height: 38px;
-  padding: 0 0.85rem 0 1.1rem !important;
+
+  gap: var(--spacing-sm);
+
+  height: 2.5rem;
+
+  padding: 0 var(--spacing-sm) !important;
+
   border-radius: 999px !important;
-  font-weight: 500;
-  font-size: 0.95rem;
+
   color: var(--color-text) !important;
   background: transparent !important;
-  border: 1px solid transparent;
-  transition: background 0.2s ease, border-color 0.2s ease;
+
+  font-family: inherit !important;
+  font-size: var(--font-sm);
+  font-weight: var(--weight-medium);
 }
 
 .user-button:hover {
   background: var(--color-background-secondary) !important;
-  border-color: color-mix(in srgb, var(--color-primary) 25%, transparent);
+}
+
+.user-button__person {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+
+  font-size: 1.5rem !important;
+
+  color: var(--color-primary);
 }
 
 .user-button__name {
-  max-width: 140px;
-  white-space: nowrap;
+  max-width: 10rem;
+
   overflow: hidden;
+
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
 
 .user-button__chevron {
-  font-size: 20px !important;
-  width: 20px !important;
-  height: 20px !important;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+
+  font-size: 1.25rem !important;
+
   color: var(--color-text-secondary);
-  transition: transform 0.2s ease;
 }
 
-.user-button[aria-expanded="true"] .user-button__chevron {
-  transform: rotate(180deg);
-}
 
-/* ========== Menu ========== */
-.menu-header {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 14px 16px 12px;
-  min-width: 220px;
-}
+/* =========================================================
+   USER MENU
+   ========================================================= */
 
-.menu-header strong {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--color-text);
-  line-height: 1.3;
-}
-
-.menu-header small {
-  font-size: 0.8rem;
-  color: var(--color-text-secondary);
-  line-height: 1.3;
-}
-
-/* Menu item styling */
 ::ng-deep .user-menu.mat-mdc-menu-panel {
-  border-radius: var(--radius-md) !important;
-  box-shadow: var(--shadow-md) !important;
-  border: 1px solid color-mix(in srgb, var(--color-text-secondary) 12%, transparent);
+  min-width: 15rem !important;
+
+  padding: var(--spacing-xs) 0 !important;
+
+  background: var(--color-surface) !important;
+
+  border: 1px solid var(--color-border);
+
+  border-radius: var(--radius-lg) !important;
+
+  box-shadow: var(--shadow-lg) !important;
+
   overflow: hidden;
 }
 
-::ng-deep .user-menu .mat-mdc-menu-item {
-  min-height: 44px;
-  font-size: 0.925rem;
-  color: var(--color-text);
-}
+.menu-header {
+  display: flex;
+  flex-direction: column;
 
-::ng-deep .user-menu .mat-mdc-menu-item .mat-icon {
-  margin-right: 12px;
-  color: var(--color-text-secondary);
-}
+  gap: var(--spacing-xs);
 
-::ng-deep .user-menu .mat-mdc-menu-item:hover {
+  padding: var(--spacing-md) var(--spacing-lg);
+
   background: var(--color-background-secondary);
 }
 
-/* Logout item */
-::ng-deep .user-menu .menu-item--danger {
-  color: var(--color-error);
-}
-
-::ng-deep .user-menu .menu-item--danger .mat-icon {
-  color: var(--color-error);
-}
-
-::ng-deep .user-menu .menu-item--danger:hover {
-  background: color-mix(in srgb, var(--color-error) 8%, transparent);
-}
-
-/* ========== Guest state ========== */
-.navbar a:not(.logo):not(.signup-link) {
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 0.95rem;
-  padding: 0.35rem 0.4rem;
-  border-radius: var(--radius-sm);
-  transition: color var(--transition-fast);
-}
-
-.navbar a:not(.logo):not(.signup-link):hover,
-.navbar a:not(.logo):not(.signup-link).active {
-  color: var(--color-primary);
-}
-
-.navbar a:not(.logo):not(.signup-link):focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-}
-
-/* Primary CTA */
-.signup-link {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.5rem 1.2rem;
-  border-radius: 999px;
-  background: var(--color-primary);
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: 
-    background var(--transition-fast),
-    transform var(--transition-fast),
-    box-shadow var(--transition-fast);
-  box-shadow: 0 2px 6px color-mix(in srgb, var(--color-primary) 30%, transparent);
-}
-
-.signup-link:hover {
-  background: var(--color-primary-dark);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-primary) 35%, transparent);
-}
-
-.signup-link:active {
-  transform: translateY(0);
-  background: var(--color-primary-dark);
-}
-
-.signup-link:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 3px;
-}
-
-/* ========== Menu Panel ========== */
-::ng-deep .user-menu.mat-mdc-menu-panel {
-  /* Background & surface */
-  background: var(--color-surface) !important;
-  
-  /* Shape & depth */
-  border-radius: var(--radius-md) !important;
-  box-shadow: var(--shadow-md) !important;
-  
-  /* Subtle border so it doesn’t float too much */
-  border: 1px solid color-mix(in srgb, var(--color-text-secondary) 14%, transparent);
-  
-  /* Spacing */
-  padding: 6px 0 !important;
-  min-width: 240px !important;
-  overflow: hidden;
-}
-
-/* ========== Header ========== */
-.menu-header {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  padding: 14px 16px 12px;
-  background: var(--color-background);          /* slight contrast from white */
-  border-bottom: 1px solid color-mix(in srgb, var(--color-text-secondary) 12%, transparent);
-}
-
 .menu-header strong {
-  font-size: 0.95rem;
-  font-weight: 600;
   color: var(--color-text);
-  line-height: 1.3;
+
+  font-size: var(--font-sm);
+  font-weight: var(--weight-semibold);
 }
 
 .menu-header small {
-  font-size: 0.8rem;
+  overflow: hidden;
+
   color: var(--color-text-secondary);
-  line-height: 1.3;
+
+  font-size: var(--font-xs);
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-/* ========== Menu Items ========== */
 ::ng-deep .user-menu .mat-mdc-menu-item {
-  min-height: 44px;
-  font-size: 0.925rem;
-  color: var(--color-text);
-  border-radius: 0;                     /* keep flat for a cleaner look */
-  margin: 0 6px;                        /* small side inset */
-  width: calc(100% - 12px);
+  min-height: 2.75rem !important;
+
+  margin: var(--spacing-xs) var(--spacing-sm) !important;
+
+  width: calc(100% - 1rem) !important;
+
   border-radius: var(--radius-sm) !important;
+
+  color: var(--color-text) !important;
+
+  font-family: var(--font-family) !important;
+  font-size: var(--font-sm) !important;
 }
 
-::ng-deep .user-menu .mat-mdc-menu-item .mat-icon {
-  margin-right: 12px;
-  color: var(--color-text-secondary);
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
-}
-
-/* Hover / focus */
-::ng-deep .user-menu .mat-mdc-menu-item:hover,
-::ng-deep .user-menu .mat-mdc-menu-item:focus {
+::ng-deep .user-menu .mat-mdc-menu-item:hover {
   background: var(--color-background-secondary) !important;
 }
 
+::ng-deep .user-menu .mat-mdc-menu-item .mat-icon {
+  color: var(--color-text-secondary) !important;
+}
+
 ::ng-deep .user-menu .mat-mdc-menu-item:hover .mat-icon {
-  color: var(--color-primary);
+  color: var(--color-primary) !important;
 }
 
-/* ========== Dividers ========== */
-::ng-deep .user-menu .mat-mdc-divider {
-  margin: 6px 0 !important;
-  border-top-color: color-mix(in srgb, var(--color-text-secondary) 14%, transparent) !important;
-}
-
-/* ========== Logout (danger) ========== */
 ::ng-deep .user-menu .menu-item--danger {
   color: var(--color-error) !important;
 }
@@ -263,6 +210,42 @@
   color: var(--color-error) !important;
 }
 
-::ng-deep .user-menu .menu-item--danger:hover {
-  background: color-mix(in srgb, var(--color-error) 9%, transparent) !important;
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .navbar {
+    height: 3.5rem;
+
+    padding: 0 var(--spacing-md);
+  }
+
+  .mobile-menu-button {
+    display: flex;
+  }
+
+  .user-button {
+    padding: 0 var(--spacing-xs) !important;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .navbar {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .user-button__name {
+    display: none;
+  }
+
+  .user-button {
+    gap: var(--spacing-xs);
+  }
+
 }

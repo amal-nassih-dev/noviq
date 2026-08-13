@@ -1,11 +1,21 @@
 /* ui-card.component.css */
 .ui-card {
   background: var(--color-surface);
-  border: 1px solid color-mix(in srgb, var(--color-text-secondary) 12%, transparent);
+  border: 1px solid color-mix(
+    in srgb,
+    var(--color-text-secondary) 12%,
+    transparent
+  );
+
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  padding: 1.35rem 1.5rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+
+  padding: var(--spacing-xl);
+
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
 .ui-card:hover {

@@ -15,10 +15,8 @@ export class OrganizationService {
 
   private readonly _organizations = signal<OrganizationResponse[]>([]);
   readonly organizations = this._organizations.asReadonly();
-  readonly currentOrganization = signal<OrganizationResponse | null>(null);
-
   
-   getAll(): Observable<OrganizationResponse[]> {
+  getAll(): Observable<OrganizationResponse[]> {
     return this.http.get<OrganizationResponse[]>(this.orgUrl).pipe(
       tap(orgs => this._organizations.set(orgs))
     );
@@ -67,34 +65,6 @@ export class OrganizationService {
         )
       )
     );
-    }
-
-    setCurrentOrganization(
-      organization: OrganizationResponse | null
-    ): void {
-      this.currentOrganization.set(organization);
-
-      if (organization) {
-        localStorage.setItem(
-          'currentOrganizationId',
-          organization.id.toString()
-        );
-      } else {
-        localStorage.removeItem('currentOrganizationId');
-      }
-    }
-
-    getCurrentOrganizationId(): number | null {
-      const storedId =
-        localStorage.getItem('currentOrganizationId');
-
-      if (!storedId) {
-        return null;
-      }
-
-      const id = Number(storedId);
-
-      return Number.isNaN(id) ? null : id;
     }
 
 }

@@ -1,55 +1,48 @@
-<nav class="breadcrumb">
-  <a routerLink="/organizations">Organizations</a>
-  <mat-icon>chevron_right</mat-icon>
-  <span>{{ organization()?.name }}</span>
-</nav>
+<div class="page-container">
+    <nav class="breadcrumb">
+    <a routerLink="/organizations">Organizations</a>
+    <mat-icon>chevron_right</mat-icon>
+    <span>{{ currentOrganization()?.name }}</span>
+    </nav>
 
-<header class="page-header">
-  <div>
-    <h1>Projects</h1>
-    <p>{{ projects().length }} project{{ projects().length === 1 ? '' : 's' }}</p>
-  </div>
+    <header class="page-header">
+    <div>
+        <h1>Projects</h1>
+        <p>{{ projects().length }} project{{ projects().length === 1 ? '' : 's' }}</p>
+    </div>
 
-  <app-ui-button
-    label="New Project"
-    icon="add"
-    variant="primary"
-    (click)="openCreateDialog()">
-  </app-ui-button>
-</header>
-
-
-<!-- Content -->
-@if (loading()) {
-  <section class="project-grid">
-    @for (_ of [1, 2, 3]; track $index) {
-      <app-ui-card class="skeleton">
-        <div class="skeleton-title"></div>
-        <div class="skeleton-line"></div>
-        <div class="skeleton-line short"></div>
-      </app-ui-card>
-    }
-  </section>
-} @else if (projects().length === 0) {
-  <div class="empty-state">
-    <mat-icon>folder_open</mat-icon>
-    <h2>No projects yet</h2>
-    <p>Create a project to start organizing tasks for this organization.</p>
     <app-ui-button
-      label="New Project"
-      icon="add"
-      variant="primary"
-      (click)="openCreateDialog()">
+        label="New Project"
+        icon="add"
+        variant="primary"
+        (click)="openCreateDialog()">
     </app-ui-button>
-  </div>
-} @else {
-  <section class="project-grid">
-    @for (project of projects(); track project.id) {
-      <app-project-card
-        [project]="project"
-        (edit)="openEditDialog($event)"
-        (delete)="openDeleteDialog($event)">
-      </app-project-card>
+    </header>
+
+
+    <!-- Content -->
+
+    @if (projects().length === 0) {
+    <div class="empty-state">
+        <mat-icon>folder_open</mat-icon>
+        <h2>No projects yet</h2>
+        <p>Create a project to start organizing tasks for this organization.</p>
+        <app-ui-button
+        label="New Project"
+        icon="add"
+        variant="primary"
+        (click)="openCreateDialog()">
+        </app-ui-button>
+    </div>
+    } @else {
+    <section class="project-grid">
+        @for (project of projects(); track project.id) {
+        <app-project-card
+            [project]="project"
+            (edit)="openEditDialog($event)"
+            (delete)="openDeleteDialog($event)">
+        </app-project-card>
+        }
+    </section>
     }
-  </section>
-}
+</div>

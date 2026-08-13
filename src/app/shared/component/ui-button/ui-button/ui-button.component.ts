@@ -1,12 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({
   selector: 'app-ui-button',
   standalone: true,
   imports: [
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   templateUrl: './ui-button.component.html',
   styleUrl: './ui-button.component.css'
@@ -26,5 +28,9 @@ export class UiButtonComponent {
   disabled = false;
 
   @Input() variant: 'primary' | 'secondary' | 'ghost' = 'primary';
+
+  @Input() icon : string | null= null;
+
+  @Input() position: 'left' | 'right'= 'left';
 
 }

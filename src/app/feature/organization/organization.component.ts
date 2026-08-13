@@ -13,6 +13,7 @@ import { filter } from 'rxjs';
 import { UiConfirmDialogComponent } from '../../shared/component/ui-confirm-dialog/ui-confirm-dialog.component';
 import { OrganizationMemberDialogComponent } from '../organization-member-dialog/organization-member-dialog.component';
 import { OrganizationMemberService } from '../../core/services/organization-member.service';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-organization',
@@ -35,6 +36,7 @@ export class OrganizationComponent implements OnInit{
    protected readonly error = signal('');
    private readonly dialog = inject(MatDialog);
    private readonly orgMemberService = inject(OrganizationMemberService);
+   private readonly notification = inject(NotificationService);
    
 
    ngOnInit(): void {
@@ -64,7 +66,13 @@ export class OrganizationComponent implements OnInit{
       }).afterClosed().pipe(
         filter(result => !!result),
         switchMap(result => this.orgService.create(result))
-      ).subscribe();
+      ).subscribe({
+        next: () => {
+          this.notification.success(
+            'Organization created successfully.'
+          );
+        }
+      });
     }
 
   openEditDialog(
@@ -81,7 +89,15 @@ export class OrganizationComponent implements OnInit{
       dialogRef.afterClosed().pipe(
         filter(result => !!result),
         switchMap(result => this.orgService.update( organization.id,result))
-      ).subscribe();
+      ).subscribe(
+        {
+        next: () => {
+          this.notification.success(
+            'Organization updated successfully.'
+          );
+        }
+      }
+      );
   }
 
   openDeleteDialog(org: OrganizationResponse){
@@ -99,7 +115,11 @@ export class OrganizationComponent implements OnInit{
       if (!confirmed) return;
 
       this.orgService.delete(org.id).subscribe({
-        error: (err) => alert(err?.error?.message || 'Delete failed')
+        next: () => {
+          this.notification.success(
+            'Organization deleted successfully.'
+          );
+        }
       });
     });
   }
@@ -125,8 +145,15 @@ export class OrganizationComponent implements OnInit{
 
       this.orgMemberService
         .addMember(organizationId, result)
-        .subscribe();
-
+        .subscribe(
+          {
+            next: () => {
+              this.notification.success(
+                'Member added successfully.'
+              );
+            }
+          }
+        );
     });
   }
 

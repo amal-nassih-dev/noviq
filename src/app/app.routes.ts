@@ -10,23 +10,62 @@ import { OrganizationComponent } from './feature/organization/organization.compo
 import { ProjectComponent } from './feature/project/project.component';
 import { ProjectBoardComponent } from './feature/project-board/project-board.component';
 import { OrgMembersComponent } from './feature/org-members/org-members.component';
+import { organizationGuard } from './core/guards/organization.guard';
 
 export const routes: Routes = [
-        {
+
+  {
+    path: '',
+    component: AppLayoutComponent,
+    canActivate: [authGuard],
+    children: [
+      {
         path: '',
-        component: AppLayoutComponent,
-        canActivate: [authGuard],
+        component: DashboardComponent,
+        canActivate: [organizationGuard]
+      },
+      {
+        path: 'organizations',
+        component: OrganizationComponent,
+        canActivate: [organizationGuard]
+      },
+      {
+        path: 'organizations/:orgId',
+        canActivate: [organizationGuard],
         children: [
-        { path: '', component: DashboardComponent },
-        { path: 'organizations', component: OrganizationComponent },
-        { path: 'organizations/:orgId/projects', component: ProjectComponent },
-        { path: 'organizations/:orgId/projects/:projectId', component: ProjectBoardComponent },
-        { path: 'organizations/:orgId/members', component: OrgMembersComponent },
+          {
+            path: 'projects',
+            component: ProjectComponent
+          },
+          {
+            path: 'projects/:projectId',
+            component: ProjectBoardComponent
+          },
+          {
+            path: 'members',
+            component: OrgMembersComponent
+          }
         ]
-    },
-    {path: "", component: AuthLayoutComponent, canActivate:[guestGuard], children: [
-       {path: "login", component: LoginComponent},
-       {path: "register", component: SignupComponent}
-    ]},
-    {path: '**', redirectTo: ''}
+      }
+    ]
+  },
+  {
+    path: '',
+    component: AuthLayoutComponent,
+    canActivate: [guestGuard],
+    children: [
+      {
+        path: 'login',
+        component: LoginComponent
+      },
+      {
+        path: 'register',
+        component: SignupComponent
+      }
+    ]
+  },
+  {
+    path: '**',
+    redirectTo: ''
+  }
 ];

@@ -46,13 +46,15 @@
    ========================================= */
 
 .mat-mdc-menu-panel {
+  min-width: 12rem !important;
+  padding: var(--spacing-xs) 0 !important;
+
   background: var(--color-surface) !important;
+
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md) !important;
-  box-shadow: var(--shadow-lg) !important;
 
-  min-width: 180px !important;
-  padding: 6px 0 !important;
+  box-shadow: var(--shadow-lg) !important;
 
   overflow: hidden;
 }
@@ -64,18 +66,18 @@
 
 /* Menu item */
 .mat-mdc-menu-item {
-  min-height: 42px !important;
+  min-height: 2.75rem !important;
 
-  margin: 2px 6px !important;
+  margin: var(--spacing-xs) var(--spacing-sm) !important;
 
-  width: calc(100% - 12px) !important;
+  width: calc(100% - 1rem) !important;
 
   border-radius: var(--radius-sm) !important;
 
   color: var(--color-text) !important;
 
-  font-family: inherit !important;
-  font-size: 0.9rem !important;
+  font-family: var(--font-family) !important;
+  font-size: var(--font-sm) !important;
 
   transition:
     background var(--transition-fast),
@@ -94,18 +96,21 @@
 
 /* Icons */
 .mat-mdc-menu-item .mat-icon {
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+
+  font-size: 1.25rem !important;
+
+  margin-right: var(--spacing-md) !important;
+
   color: var(--color-text-secondary) !important;
 
-  font-size: 20px !important;
-  width: 20px !important;
-  height: 20px !important;
-
-  margin-right: 12px !important;
+  font-family: 'Material Icons' !important;
 }
 
 /* Divider */
 .mat-mdc-menu-divider {
-  margin: 6px 0 !important;
+  margin: var(--radius-sm) 0 !important;
   border-top-color: var(--color-border) !important;
 }
 
@@ -129,24 +134,16 @@
   ) !important;
 }
 
-.mat-mdc-menu-panel {
-  min-width: 190px !important;
-}
-
 .cdk-overlay-container,
 .cdk-overlay-pane {
-  font-family: var(--font-family, Inter, Roboto, Arial, sans-serif);
+  font-family: var(--font-family);
 }
 
 .mat-mdc-dialog-container,
-.mat-mdc-dialog-container *,
 .mat-mdc-menu-panel,
-.mat-mdc-menu-panel *,
 .mat-mdc-select-panel,
-.mat-mdc-select-panel *,
-.mat-mdc-autocomplete-panel,
-.mat-mdc-autocomplete-panel * {
-  font-family: inherit;
+.mat-mdc-autocomplete-panel {
+  font-family: var(--font-family);
 }
 
 /* =========================================================

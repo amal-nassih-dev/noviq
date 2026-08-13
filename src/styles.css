@@ -3,65 +3,17 @@
 @import "./styles/_typography.css";
 @import "./styles/_utilities.css";
 @import "./styles/_material-overrides.css";
-
+@import "./styles/_components.css";
+@import "./styles/_dialog.css";
 
 html,
 body {
   font-family: var(--font-family);
 }
 
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
-
-.mat-mdc-dialog-container,
-.mat-mdc-form-field,
-.mat-mdc-input-element,
-.mat-mdc-select,
-.mat-mdc-option,
-.mat-mdc-button,
-.mat-mdc-menu-item {
-  font-family: inherit;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  width: 100%;
-  min-height: 100%;
-  font-size: 16px;
-}
-
 body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-
-  font-family: var(--font-family, Inter, Roboto, Arial, sans-serif);
-
   background: var(--color-background);
   color: var(--color-text);
-
-  overflow-x: hidden;
-}
-
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
 }
 
 a {
@@ -69,72 +21,31 @@ a {
   text-decoration: none;
 }
 
-/* =========================================================
-   GLOBAL TYPOGRAPHY
-   ========================================================= */
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  margin-top: 0;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-button,
-input,
-textarea,
-select {
-  font-family: inherit;
-}
-
-/* =========================================================
-   GLOBAL PAGE CONTAINER
-   ========================================================= */
+/* =========================
+   Global page container
+   ========================= */
 
 .page-container {
   width: 100%;
-  max-width: 1600px;
+  max-width: 100rem;
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: var(--spacing-xl);
+  box-sizing: border-box;
 }
 
-/* =========================================================
-   RESPONSIVE PAGE CONTAINER
-   ========================================================= */
 
-@media (max-width: 768px) {
-  .page-container {
-    padding: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .page-container {
-    padding: 0.75rem;
-  }
-}
-
-.full-width {
-  width: 100%;
-}
+/* =========================
+   Page header
+   ========================= */
 
 .page-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  gap: 1rem;
-
-  margin-bottom: 1.5rem;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
 }
 
 .page-header > div {
@@ -143,15 +54,49 @@ select {
 
 .page-header h1 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: var(--font-2xl);
 }
 
 .page-header p {
-  margin: 0.25rem 0 0;
+  margin: var(--spacing-xs) 0 0;
   color: var(--color-text-secondary);
 }
 
-@media (max-width: 600px) {
+
+
+/* =========================
+   notifications
+   ========================= */
+
+.notification-success {
+  --mdc-snackbar-container-color: var(--color-success);
+  --mdc-snackbar-supporting-text-color: white;
+}
+
+.notification-error {
+  --mdc-snackbar-container-color: var(--color-error);
+  --mdc-snackbar-supporting-text-color: white;
+}
+
+.notification-warning {
+  --mdc-snackbar-container-color: var(--color-warning);
+  --mdc-snackbar-supporting-text-color: white;
+}
+
+.notification-info {
+  --mdc-snackbar-container-color: var(--color-primary);
+  --mdc-snackbar-supporting-text-color: white;
+}
+
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 768px) {
+  .page-container {
+    padding: var(--spacing-md);
+  }
 
   .page-header {
     align-items: flex-start;
@@ -160,5 +105,15 @@ select {
 
   .page-header app-ui-button {
     width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-container {
+    padding: var(--spacing-sm);
+  }
+
+  .page-header h1 {
+    font-size: var(--font-2xl);
   }
 }

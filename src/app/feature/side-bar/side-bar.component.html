@@ -1,6 +1,7 @@
 <aside
   class="sidebar"
   [class.collapsed]="isCollapsed()"
+  [class.mobile-open]="isMobileOpen()"
 >
 
   <!-- ========================================= -->
@@ -37,6 +38,18 @@
     </span>
 
   </div>
+
+  @if (isMobileOpen()) {
+  <button
+    type="button"
+    class="sidebar__mobile-close"
+    (click)="closeMobile()"
+    aria-label="Close navigation">
+
+    <mat-icon>close</mat-icon>
+
+  </button>
+}
 
 
   <!-- ========================================= -->
@@ -261,7 +274,7 @@
             [matTooltipDisabled]="!isCollapsed()"
           >
 
-            <span class="project-dot"></span>
+            <span class="project-dot" [style.background-color]="getProjectColor(project)"></span>
 
             <span class="project-name">
               {{ project.name }}
@@ -339,35 +352,6 @@
   <!-- ========================================= -->
 
   <div class="sidebar__bottom">
-
-    @if (currentOrganization(); as organization) {
-
-      <!-- Organization settings -->
-
-      <a
-        class="nav-item"
-        [routerLink]="[
-          '/organizations',
-          organization.id,
-          'settings'
-        ]"
-        routerLinkActive="active"
-        matTooltip="Settings"
-        [matTooltipDisabled]="!isCollapsed()"
-      >
-
-        <mat-icon>
-          settings
-        </mat-icon>
-
-        <span class="label">
-           Settings
-        </span>
-
-      </a>
-
-    }
-
 
     <!-- Collapse -->
 

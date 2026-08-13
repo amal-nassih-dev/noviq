@@ -19,7 +19,7 @@
 }
 
 .signup-card {
-  width: 430px;
+  width: min(430px, 100%);
 
   padding: var(--spacing-2xl);
 
@@ -79,4 +79,16 @@ app-ui-button {
 .error {
   color: #d32f2f;
   font-size: .9rem;
+}
+
+
+@media (max-width: 480px) {
+  .signup-page {
+    padding: var(--spacing-md);
+  }
+
+  .signup-card {
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+  }
 }

@@ -11,6 +11,8 @@ import { RouterLink } from '@angular/router';
 import { passwordsMatchValidator } from '../../../../shared/validators/passwords-match.validator';
 import { ApiError } from '../../../../core/models/auth/api-error';
 import { AuthStateService } from '../../../../core/services/auth-state.service';
+import { ErrorHandlerService } from '../../../../core/services/error-handler.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
@@ -23,7 +25,7 @@ import { AuthStateService } from '../../../../core/services/auth-state.service';
     RouterLink
 ],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.css'
+  styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
   protected readonly formBuilder = inject(FormBuilder);
@@ -33,6 +35,7 @@ export class SignupComponent {
   protected readonly errorMessage = signal('');
   protected readonly loading = signal(false);
   protected readonly authStateService = inject(AuthStateService);
+  private readonly errorHandler = inject(ErrorHandlerService);
 
   protected signupForm = this.formBuilder.nonNullable.group({
     email : ['', [
@@ -77,27 +80,46 @@ export class SignupComponent {
     } = this.signupForm.getRawValue();
 
     this.authenticationService.signup(request).pipe(
-       takeUntilDestroyed(this.destroyRef)
+       takeUntilDestroyed(this.destroyRef),
+        finalize(() =>
+          this.loading.set(false)
+        )
     ).subscribe({
       next: (response) => {
-         this.authStateService.login(response);
-         this.loading.set(false);
-         this.router.navigate(['/dashboard']);
+         this.authStateService.setAuthentication(
+          response.token,
+          response.user
+        );
+
+         this.router.navigate(['/']);
       },
       error: (err) => {
-        this.loading.set(false);
-        const apiError = err.error as ApiError;
-        if (apiError.fieldErrors?.length) {
-          apiError.fieldErrors.forEach(fieldError => {
-            this.signupForm.get(fieldError.field)?.setErrors({
-              server: fieldError.message
-            });
+        const fieldErrors =
+          this.errorHandler.getFieldErrors(err);
+
+        if (fieldErrors.length > 0) {
+
+          fieldErrors.forEach(fieldError => {
+
+            this.signupForm
+              .get(fieldError.field)
+              ?.setErrors({
+                server: fieldError.message
+              });
+
           });
 
           this.errorMessage.set('');
-        } else {
-          this.errorMessage.set(apiError.message);
+
+          return;
         }
+
+        this.errorMessage.set(
+          this.errorHandler.getMessage(
+            err,
+            'Unable to create your account. Please try again.'
+          )
+        );
       }
     })
   }

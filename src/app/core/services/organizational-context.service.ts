@@ -6,8 +6,16 @@ import { OrganizationMemberService } from './organization-member.service';
 
 import { OrganizationResponse } from '../models/organization/organization-response';
 import { ProjectRequest } from '../models/project/project-request';
+import { ProjectResponse } from '../models/project/project-response';
+import { OrgMemberResponse } from '../models/organization-member/organization-member-response';
 
-import { switchMap } from 'rxjs';
+import {
+  forkJoin,
+  Observable,
+  of,
+  switchMap,
+  tap
+} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -38,78 +46,131 @@ export class OrganizationalContextService {
   readonly members =
     this.organizationMemberService.members;
 
+  private readonly _contextLoaded = signal(false);
+
+  readonly contextLoaded = this._contextLoaded.asReadonly();
+
 
   /**
    * Initialize the organizational context.
    *
    * Priority:
-   *
-   * 1. Previously selected organization
-   * 2. First available organization
+   * 1. URL organization has highest priority
+   * 2. Previously selected organization
+   * 3. First available organization
    */
-  initialize(): void {
+  initializeContext(
+    orgId?: number
+  ): Observable<{
+    projects: ProjectResponse[];
+    members: OrgMemberResponse[];
+  }> {
 
-    const organizations =
-      this.organizations();
+    const organizations = this.organizations();
+
+    const emptyResult = {
+      projects: [],
+      members: []
+    };
 
     if (organizations.length === 0) {
       this.currentOrganization.set(null);
-      return;
+
+      return of(emptyResult);
     }
 
+    // URL organization has priority.
+    if (orgId !== undefined) {
+
+      const organization = organizations.find(
+        org => org.id === orgId
+      );
+
+      if (!organization) {
+        return of(emptyResult);
+      }
+
+      const current = this.currentOrganization();
+
+      if (current?.id === organization.id && this.contextLoaded()) {
+        return of({
+          projects: this.projects(),
+          members: this.members()
+        });
+      }
+
+      return this.selectOrganization(organization);
+    }
+
+    // No organization in URL.
+    // Use the previously selected organization.
     const storedOrganizationId =
       this.getStoredOrganizationId();
 
     if (storedOrganizationId !== null) {
 
-      const storedOrganization =
-        organizations.find(
-          organization =>
-            organization.id === storedOrganizationId
-        );
+      const organization = organizations.find(
+        org => org.id === storedOrganizationId
+      );
 
-      if (storedOrganization) {
-        this.selectOrganization(storedOrganization);
-        return;
+      if (organization) {
+
+        const current =
+          this.currentOrganization();
+
+        if (current?.id === organization.id && this.contextLoaded()) {
+          return of({
+            projects: this.projects(),
+            members: this.members()
+          });
+        }
+
+        return this.selectOrganization(organization);
       }
     }
-
-    // Nothing stored or stored organization no longer exists.
-    this.selectOrganization(organizations[0]);
+        // Nothing stored → first organization.
+    return this.selectOrganization(organizations[0]);
   }
-
 
   /**
    * Select an organization and load its data.
    */
   selectOrganization(
     organization: OrganizationResponse
-  ): void {
-
+  ): Observable<{
+    projects: ProjectResponse[];
+    members: OrgMemberResponse[];
+  }> {
+    this._contextLoaded.set(false);
     this.currentOrganization.set(organization);
 
     this.storeOrganizationId(organization.id);
 
-    this.loadOrganizationData(organization.id);
-  }
+    this.projectService.clear();
+    this.organizationMemberService.clear();
 
+    return this.loadOrganizationData(organization.id);
+  }
 
   /**
    * Load all data belonging to the current organization.
    */
   private loadOrganizationData(
     organizationId: number
-  ): void {
+  ): Observable<{
+    projects: ProjectResponse[];
+    members: OrgMemberResponse[];
+  }> {
 
-    this.projectService
-      .findAll(organizationId)
-      .subscribe();
-
-    this.organizationMemberService
-      .findAll(organizationId)
-      .subscribe();
+    return forkJoin({
+      projects: this.projectService.findAll(organizationId),
+      members: this.organizationMemberService.findAll(organizationId)
+    }).pipe(
+    tap(() => {
+      this._contextLoaded.set(true);
+    })
+  );;
   }
-
 
   /**
    * Get the last selected organization ID.
@@ -130,7 +191,6 @@ export class OrganizationalContextService {
       : id;
   }
 
-
   /**
    * Remember the selected organization.
    */
@@ -144,25 +204,4 @@ export class OrganizationalContextService {
     );
   }
 
-
-  /**
-   * Create a project and refresh the
-   * projects belonging to the organization.
-   */
-  createProject(
-    organizationId: number,
-    request: ProjectRequest
-  ) {
-
-    return this.projectService
-      .addProject(
-        organizationId,
-        request
-      )
-      .pipe(
-        switchMap(() =>
-          this.projectService.findAll(organizationId)
-        )
-      );
-  }
 }

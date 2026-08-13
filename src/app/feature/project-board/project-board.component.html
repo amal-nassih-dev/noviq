@@ -1,66 +1,145 @@
-<header class="board-header">
-  <div class="board-header__left">
-    <button type="button" class="back-btn" (click)="goBack()">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
+<div class="page-container">
 
-    <div>
-      <h1>{{ project()?.name || 'Project' }}</h1>
-      <p>{{ totalTasks() }} tasks · {{ progress() }}% complete</p>
+  <header class="board-header">
+
+    <div class="board-header__left">
+
+      <button
+        type="button"
+        class="back-btn"
+        aria-label="Back to projects"
+        (click)="goBack()">
+
+        <mat-icon>
+          arrow_back
+        </mat-icon>
+
+      </button>
+
+      <div class="board-title">
+
+        <h1>
+          {{ project()?.name || 'Project' }}
+        </h1>
+
+        <p>
+          {{ totalTasks() }} tasks
+          ·
+          {{ progress() }}% complete
+        </p>
+
+      </div>
+
     </div>
-  </div>
 
-  <div class="board-header__right">
-    <div class="progress-mini">
-      <div class="progress-mini__fill" [style.width.%]="progress()"></div>
-    </div>
-    <span class="progress-label">{{ progress() }}%</span>
+    <div class="board-header__right">
 
-    <app-ui-button
-      label="Add Task"
-      icon="add"
-      variant="primary"
-      (click)="openCreateTask()">
-    </app-ui-button>
-  </div>
-</header>
-
-@if (loading()) {
-  <p class="loading">Loading board...</p>
-} @else {
-  <div class="board">
-    @for (col of columns(); track col.id) {
-      <section class="column">
-        <div class="column__header">
-          <div class="column__title">
-            <span class="column__dot"></span>
-            <h2>{{ col.title }}</h2>
-            <span class="column__count">{{ col.tasks.length }}</span>
-          </div>
-          <button type="button" class="column__add" (click)="openCreateTask(col.id)">
-            <mat-icon>add</mat-icon>
-          </button>
-        </div>
-
+      <div class="progress-mini">
         <div
-          class="column__list"
-          cdkDropList
-          [id]="col.id"
-          [cdkDropListData]="col.tasks"
-          [cdkDropListConnectedTo]="connectedDropLists()"
-          (cdkDropListDropped)="drop($event, col.id)">
-
-          @for (task of col.tasks; track task.id) {
-            <div cdkDrag>
-              <app-task-card
-                [members]="members()"
-                [task]="task"
-                (edit)="openEditTask($event)">
-              </app-task-card>
-            </div>
-          }
+          class="progress-mini__fill"
+          [style.width.%]="progress()">
         </div>
-      </section>
-    }
-  </div>
-}
+      </div>
+
+      <span class="progress-label">
+        {{ progress() }}%
+      </span>
+
+      <app-ui-button
+        label="Add Task"
+        icon="add"
+        variant="primary"
+        (click)="openCreateTask()">
+      </app-ui-button>
+
+    </div>
+
+  </header>
+
+
+  @if (loading()) {
+
+    <p class="loading">
+      Loading board...
+    </p>
+
+  } @else {
+
+    <div class="board">
+
+      @for (
+        col of columns();
+        track col.id
+      ) {
+
+        <section class="column">
+
+          <div class="column__header">
+
+            <div class="column__title">
+
+              <span
+                class="column__dot">
+              </span>
+
+              <h2>
+                {{ col.title }}
+              </h2>
+
+              <span class="column__count">
+                {{ col.tasks.length }}
+              </span>
+
+            </div>
+
+            <button
+              type="button"
+              class="column__add"
+              aria-label="Add task"
+              (click)="openCreateTask(col.id)">
+
+              <mat-icon>
+                add
+              </mat-icon>
+
+            </button>
+
+          </div>
+
+
+          <div
+            class="column__list"
+            cdkDropList
+            [id]="col.id"
+            [cdkDropListData]="col.tasks"
+            [cdkDropListConnectedTo]="connectedDropLists()"
+            (cdkDropListDropped)="drop($event, col.id)">
+
+            @for (
+              task of col.tasks;
+              track task.id
+            ) {
+
+              <div cdkDrag>
+
+                <app-task-card
+                  [members]="members()"
+                  [task]="task"
+                  (edit)="openEditTask($event)">
+                </app-task-card>
+
+              </div>
+
+            }
+
+          </div>
+
+        </section>
+
+      }
+
+    </div>
+
+  }
+
+</div>
