@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { createActivatedRouteStub } from '../../../testing/test-helpers';
 
 import { ProjectBoardComponent } from './project-board.component';
 import { ActivatedRoute } from '@angular/router';
@@ -11,11 +12,7 @@ describe('ProjectBoardComponent', () => {
   let fixture: ComponentFixture<ProjectBoardComponent>;
 
   beforeEach(async () => {
-    const activatedRouteStub = {
-      snapshot: { paramMap: { get: (key: string) => null } },
-      params: of({}),
-      paramMap: of({ get: (key: string) => null })
-    } as any;
+    const activatedRouteStub = createActivatedRouteStub({ orgId: '1', projectId: '2' });
 
     await TestBed.configureTestingModule({
       imports: [ProjectBoardComponent, RouterTestingModule, HttpClientTestingModule],

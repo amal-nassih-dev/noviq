@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { createAuthStub, createAuthStateStub } from '../../../../testing/test-helpers';
 
 import { LoginComponent } from './login.component';
 import { AuthenticationService } from '../../../core/services/authentication.service';
@@ -12,16 +13,8 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(async () => {
-    const authStub = {
-      login: () => of({ token: '', user: {} }),
-      signup: () => of({ token: '', user: {} }),
-      getToken: () => null
-    } as any;
-
-    const authStateStub = {
-      login: () => {},
-      getToken: () => null
-    } as any;
+    const authStub = createAuthStub();
+    const authStateStub = createAuthStateStub();
 
     await TestBed.configureTestingModule({
       imports: [LoginComponent, HttpClientTestingModule, RouterTestingModule],
