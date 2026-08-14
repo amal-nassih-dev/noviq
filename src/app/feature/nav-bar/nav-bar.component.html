@@ -58,20 +58,51 @@
 
       <mat-divider />
 
-
       <button
         mat-menu-item
+        [matMenuTriggerFor]="themeMenu"
         type="button">
 
         <mat-icon>
-          person
+          palette
         </mat-icon>
 
         <span>
-          My Profile
+          Theme
         </span>
 
+        <mat-icon class="menu-item__end-icon">
+          chevron_right
+        </mat-icon>
+
       </button>
+
+      <mat-menu #themeMenu="matMenu" class="theme-menu">
+
+        @for (theme of themes; track theme.name) {
+          <button
+            mat-menu-item
+            type="button"
+            (click)="setTheme(theme.name)">
+
+            <mat-icon>
+              {{ theme.icon }}
+            </mat-icon>
+
+            <span>
+              {{ theme.label }}
+            </span>
+
+            @if (themeService.currentTheme() === theme.name) {
+              <mat-icon class="theme-check">
+                check
+              </mat-icon>
+            }
+
+          </button>
+        }
+
+      </mat-menu>
 
 
       <button

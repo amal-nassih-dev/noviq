@@ -1,7 +1,8 @@
-:root {
+:root,
+[data-theme="slate"] {
 
   /* =========================
-     Colors
+     Colors (Slate default)
      ========================= */
 
   --color-primary: #334155;
@@ -93,4 +94,118 @@
 
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s ease;
+}
+
+
+/* =========================================================
+    Ocean theme
+    ========================================================= */
+
+[data-theme="ocean"] {
+
+   --color-primary: #0284c7;
+   --color-primary-light: #0ea5e9;
+   --color-primary-dark: #0369a1;
+
+   --color-background: #f0f9ff;
+   --color-background-secondary: #e0f2fe;
+   --color-surface: #ffffff;
+
+   --color-text: #0c4a6e;
+   --color-text-secondary: #64748b;
+
+   --color-border: #bae6fd;
+
+   --color-error: #ef4444;
+   --color-success: #059669;
+   --color-warning: #d97706;
+   --color-info: #0284c7;
+}
+
+
+/* =========================================================
+    Forest theme
+    ========================================================= */
+
+[data-theme="forest"] {
+
+   --color-primary: #059669;
+   --color-primary-light: #10b981;
+   --color-primary-dark: #047857;
+
+   --color-background: #f0fdf4;
+   --color-background-secondary: #dcfce7;
+   --color-surface: #ffffff;
+
+   --color-text: #14532d;
+   --color-text-secondary: #64748b;
+
+   --color-border: #bbf7d0;
+
+   --color-error: #ef4444;
+   --color-success: #059669;
+   --color-warning: #d97706;
+   --color-info: #0284c7;
+}
+
+
+/* =========================================================
+    Violet theme
+    ========================================================= */
+
+[data-theme="violet"] {
+
+   --color-primary: #7c3aed;
+   --color-primary-light: #8b5cf6;
+   --color-primary-dark: #6d28d9;
+
+   --color-background: #faf5ff;
+   --color-background-secondary: #f3e8ff;
+   --color-surface: #ffffff;
+
+   --color-text: #3b0764;
+   --color-text-secondary: #6b7280;
+
+   --color-border: #e9d5ff;
+
+   --color-error: #ef4444;
+   --color-success: #059669;
+   --color-warning: #d97706;
+   --color-info: #6366f1;
+}
+
+
+/* =========================================================
+    Midnight (dark) theme
+    ========================================================= */
+
+[data-theme="midnight"] {
+
+   --color-primary: #818cf8;
+   --color-primary-light: #a5b4fc;
+   --color-primary-dark: #6366f1;
+
+   --color-background: #0f172a;
+   --color-background-secondary: #1e293b;
+
+   --color-surface: #111827;
+
+   --color-text: #f8fafc;
+   --color-text-secondary: #94a3b8;
+
+   --color-border: #334155;
+
+   --color-error: #f87171;
+   --color-success: #34d399;
+   --color-warning: #fbbf24;
+   --color-info: #60a5fa;
+
+   --shadow-sm:
+      0 4px 10px rgba(0, 0, 0, 0.25);
+
+   --shadow-md:
+      0 8px 24px rgba(0, 0, 0, 0.30);
+
+   --shadow-lg:
+      0 18px 50px rgba(0, 0, 0, 0.40);
 }

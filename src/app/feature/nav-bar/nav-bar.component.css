@@ -125,6 +125,18 @@
   color: var(--color-text-secondary);
 }
 
+.menu-item__end-icon {
+  margin-left: auto !important;
+
+  color: var(--color-text-secondary) !important;
+}
+
+.theme-check {
+  margin-left: auto !important;
+
+  color: var(--color-primary) !important;
+}
+
 
 /* =========================================================
    USER MENU

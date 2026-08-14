@@ -14,6 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { AuthenticationService } from '../../core/services/authentication.service';
 import { AuthStateService } from '../../core/services/auth-state.service';
+import { ThemeService } from '../../core/services/theme.service';
+import { ThemeName } from '../../core/models/theme/theme';
 
 @Component({
   selector: 'app-nav-bar',
@@ -37,6 +39,21 @@ export class NavBarComponent {
 
   protected readonly authStateService =
     inject(AuthStateService);
+
+  protected readonly themeService =
+    inject(ThemeService);
+
+  protected readonly themes: { name: ThemeName; label: string; icon: string }[] = [
+    { name: 'slate', label: 'Slate', icon: 'palette' },
+    { name: 'ocean', label: 'Ocean', icon: 'water' },
+    { name: 'forest', label: 'Forest', icon: 'forest' },
+    { name: 'violet', label: 'Violet', icon: 'auto_awesome' },
+    { name: 'midnight', label: 'Midnight', icon: 'dark_mode' }
+  ];
+
+  setTheme(theme: ThemeName): void {
+    this.themeService.setTheme(theme);
+  }
 
   @Output()
   menuToggle = new EventEmitter<void>();
