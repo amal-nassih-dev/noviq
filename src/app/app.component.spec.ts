@@ -25,7 +25,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    // app template renders a router outlet; check that it exists instead of a static title
     expect(compiled.querySelector('router-outlet')).toBeTruthy();
   });
 });

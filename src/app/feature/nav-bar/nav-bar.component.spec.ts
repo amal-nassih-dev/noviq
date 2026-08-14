@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { createAuthStub, createAuthStateStub } from '../../../testing/test-helpers';
+import { Router } from '@angular/router';
 
 import { NavBarComponent } from './nav-bar.component';
 import { AuthenticationService } from '../../core/services/authentication.service';
@@ -32,5 +33,18 @@ describe('NavBarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should logout and navigate to /login', () => {
+    const auth = TestBed.inject(AuthenticationService) as any;
+    const router = TestBed.inject(Router);
+
+    const logoutSpy = spyOn(auth, 'logout');
+    const navSpy = spyOn(router, 'navigate');
+
+    component.logout();
+
+    expect(logoutSpy).toHaveBeenCalled();
+    expect(navSpy).toHaveBeenCalledWith(['/login']);
   });
 });
