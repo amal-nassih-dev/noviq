@@ -9,7 +9,6 @@ import { signal } from '@angular/core';
 
 import { ProjectBoardComponent } from './project-board.component';
 import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
 
 describe('ProjectBoardComponent', () => {
   let component: ProjectBoardComponent;

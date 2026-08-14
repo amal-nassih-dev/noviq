@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 import { SignupComponent } from './signup.component';
 import { AuthenticationService } from '../../../../core/services/authentication.service';
 import { AuthStateService } from '../../../../core/services/auth-state.service';
-import { of } from 'rxjs';
 
 describe('SignupComponent', () => {
   let component: SignupComponent;
