@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { createAuthStub, createAuthStateStub } from '../../../../../testing/test-helpers';
 import { throwError, of } from 'rxjs';
 import { ErrorHandlerService } from '../../../../core/services/error-handler.service';
+import { Router } from '@angular/router';
 
 import { SignupComponent } from './signup.component';
 import { AuthenticationService } from '../../../../core/services/authentication.service';
@@ -44,13 +45,13 @@ describe('SignupComponent', () => {
   it('should set auth state and navigate on successful signup', () => {
     const auth = TestBed.inject(AuthenticationService) as any;
     const authState = TestBed.inject(AuthStateService) as any;
-    const router = TestBed.inject(Router);
+    const router = TestBed.inject(Router) as any;
 
     spyOn(auth, 'signup').and.returnValue(of({ token: 't', user: { id: 2 } }));
     spyOn(authState, 'setAuthentication');
-    const navSpy = spyOn(router, 'navigate');
+    const navSpy = spyOn(router, 'navigate' as any);
 
-    component.signupForm.setValue({ email: 'a@b.com', fullName: 'Name', password: 'password1', confirmPassword: 'password1' });
+    (component as any).signupForm.setValue({ email: 'a@b.com', fullName: 'Name', password: 'password1', confirmPassword: 'password1' });
     component.onSubmit();
 
     expect(auth.signup).toHaveBeenCalled();
@@ -65,11 +66,11 @@ describe('SignupComponent', () => {
     spyOn(auth, 'signup').and.returnValue(throwError(() => new Error('bad')));
     spyOn(errorHandler, 'getFieldErrors').and.returnValue([{ field: 'email', message: 'Invalid' }]);
 
-    component.signupForm.setValue({ email: 'a@b.com', fullName: 'Name', password: 'password1', confirmPassword: 'password1' });
+    (component as any).signupForm.setValue({ email: 'a@b.com', fullName: 'Name', password: 'password1', confirmPassword: 'password1' });
     component.onSubmit();
 
-    expect(component.signupForm.get('email')?.errors).toEqual({ server: 'Invalid' });
-    expect(component.errorMessage()).toBe('');
+    expect((component as any).signupForm.get('email')?.errors).toEqual({ server: 'Invalid' });
+    expect((component as any).errorMessage()).toBe('');
   });
 
   it('should set generic error message on signup failure without field errors', () => {
@@ -80,9 +81,9 @@ describe('SignupComponent', () => {
     spyOn(errorHandler, 'getFieldErrors').and.returnValue([]);
     spyOn(errorHandler, 'getMessage').and.returnValue('generic signup error');
 
-    component.signupForm.setValue({ email: 'a@b.com', fullName: 'Name', password: 'password1', confirmPassword: 'password1' });
+    (component as any).signupForm.setValue({ email: 'a@b.com', fullName: 'Name', password: 'password1', confirmPassword: 'password1' });
     component.onSubmit();
 
-    expect(component.errorMessage()).toBe('generic signup error');
+    expect((component as any).errorMessage()).toBe('generic signup error');
   });
 });

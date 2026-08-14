@@ -4,11 +4,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { createAuthStub, createAuthStateStub } from '../../../../testing/test-helpers';
 import { throwError, of } from 'rxjs';
 import { ErrorHandlerService } from '../../../core/services/error-handler.service';
+import { Router } from '@angular/router';
 
 import { LoginComponent } from './login.component';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { AuthStateService } from '../../../core/services/auth-state.service';
-import { of } from 'rxjs';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -44,13 +44,13 @@ describe('LoginComponent', () => {
   it('should set auth state and navigate on successful login', () => {
     const auth = TestBed.inject(AuthenticationService) as any;
     const authState = TestBed.inject(AuthStateService) as any;
-    const router = TestBed.inject(Router);
+    const router = TestBed.inject(Router) as any;
 
     spyOn(auth, 'login').and.returnValue(of({ token: 't', user: { id: 1 } }));
     spyOn(authState, 'setAuthentication');
-    const navSpy = spyOn(router, 'navigate');
+    const navSpy = spyOn(router, 'navigate' as any);
 
-    component.loginForm.setValue({ email: 'a@b.com', password: 'password1' });
+    (component as any).loginForm.setValue({ email: 'a@b.com', password: 'password1' });
     component.onSubmit();
 
     expect(auth.login).toHaveBeenCalled();
@@ -65,11 +65,10 @@ describe('LoginComponent', () => {
     spyOn(auth, 'login').and.returnValue(throwError(() => new Error('bad')));
     spyOn(errorHandler, 'getFieldErrors').and.returnValue([{ field: 'email', message: 'Invalid' }]);
 
-    component.loginForm.setValue({ email: 'a@b.com', password: 'password1' });
+    (component as any).loginForm.setValue({ email: 'a@b.com', password: 'password1' });
     component.onSubmit();
-
-    expect(component.loginForm.get('email')?.errors).toEqual({ server: 'Invalid' });
-    expect(component.errorMessage()).toBe('');
+    expect((component as any).loginForm.get('email')?.errors).toEqual({ server: 'Invalid' });
+    expect((component as any).errorMessage()).toBe('');
   });
 
   it('should set generic error message when no field errors', () => {
@@ -80,9 +79,8 @@ describe('LoginComponent', () => {
     spyOn(errorHandler, 'getFieldErrors').and.returnValue([]);
     spyOn(errorHandler, 'getMessage').and.returnValue('generic error');
 
-    component.loginForm.setValue({ email: 'a@b.com', password: 'password1' });
+    (component as any).loginForm.setValue({ email: 'a@b.com', password: 'password1' });
     component.onSubmit();
-
-    expect(component.errorMessage()).toBe('generic error');
+    expect((component as any).errorMessage()).toBe('generic error');
   });
 });
