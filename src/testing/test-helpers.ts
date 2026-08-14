@@ -14,7 +14,8 @@ export function createAuthStateStub() {
   return {
     login: () => {},
     getToken: () => null,
-    user: () => ({ fullName: 'Test User', email: 'test@example.com' })
+    user: () => ({ fullName: 'Test User', email: 'test@example.com' }),
+    setAuthentication: (token: string, user: any) => {}
   } as any;
 }
 
